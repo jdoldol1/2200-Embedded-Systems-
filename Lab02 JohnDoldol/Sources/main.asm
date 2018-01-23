@@ -74,7 +74,7 @@ ONE:
       BRA ONE
       
 COUNT:
-      JSR DBOUNCE
+      JSR DBOUNCE                   ;debounce
       BRCLR PT1AD1,#%00001000,ONE          
       BRSET PT1AD1,#%00011000,ADD
       BRSET PT1AD1,#%00001100,SUB
@@ -82,7 +82,7 @@ COUNT:
       BRA COUNT
       
 ADD:
-      JSR DBOUNCE
+      JSR DBOUNCE                   ;debounce
       BRCLR PT1AD1,#%00011000,ONE 
       LDD PT1AD1
       ADDA #%00100000
@@ -91,7 +91,7 @@ ADD:
       JSR Delay
       BRA BUFFER
 SUB:
-      JSR DBOUNCE
+      JSR DBOUNCE                    ;debounce
       BRCLR PT1AD1,#%00001100,ONE
       LDD PT1AD1
       SUBA #%00100000
@@ -100,8 +100,8 @@ SUB:
       JSR Delay       
       BRA BUFFER
 BUFFER:   
-      BRSET PT1AD1, #%00000100,BUFFER
-      BRSET PT1AD1, #%00010000,BUFFER
+      BRSET PT1AD1, #%00000100,BUFFER   ;buffer so that sticky keys dont decrement
+      BRSET PT1AD1, #%00010000,BUFFER   ;buffer so that sticky keys dont increment
       BRA ONE
 
 DBOUNCE:
