@@ -105,7 +105,7 @@ BUFFER:
       BRA ONE
 
 DBOUNCE:
-      LDX #10
+      LDX #5
       JSR Delay 
       RTS
       
