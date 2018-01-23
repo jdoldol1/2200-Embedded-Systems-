@@ -82,6 +82,8 @@ COUNT:
       BRA COUNT
       
 ADD:
+      JSR DBOUNCE
+      BRCLR PT1AD1,#%00011000,ONE 
       LDD PT1AD1
       ADDA #%00100000
       STD PT1AD1
@@ -89,6 +91,8 @@ ADD:
       JSR Delay
       BRA BUFFER
 SUB:
+      JSR DBOUNCE
+      BRCLR PT1AD1,#%00001100,ONE
       LDD PT1AD1
       SUBA #%00100000
       STD PT1AD1
