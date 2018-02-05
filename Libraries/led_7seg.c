@@ -62,16 +62,15 @@ void Bot_8Out_C(unsigned char c)
 ;                7 segment LEDS
 ;________________________________________________________
 */
-void Bot_16Out(unsigned int iIn)
-{
-	unsigned char val;
-
-	val = iIn & 0x00ff;		//mask to obtain only two lower nibble
-	Char_7Seg_C(7,val);		//send out to position 6 & 7 
-
-	val = iIn >> 8;			//move upper two nibble to lowest
-	Char_7Seg_C(5,val);		//send out to position 4 & 5
-
+void Bot_16Out_C(unsigned int iIn)
+{   
+    int i;
+    int j = 0;
+    for(i = 7; i >= 4; i--) 
+    {
+       Char_7Seg_C(i,(unsigned char)(iIn >> j));
+       j+=4;       
+    }
 }
 /*
 ;________________________________________________________
@@ -243,14 +242,45 @@ void Top_8Out_C(unsigned char c)
 
 void Top_16Out_C(unsigned int iIn)
 {
-	unsigned char val;
-
-	val = iIn & 0x00ff;		//mask to keep two lower nibbles only
-	Char_7Seg_C(2,val);		//send out position 2 & 3
-
-	val = iIn >> 8;			//move upper two bits to lowest
-	Char_7Seg_C(0,val);		//send out to position 0 & 1;
+	int i;
+    int j = 0;
+    for(i = 3; i >= 0; i--) 
+    {
+       Char_7Seg_C(i,(unsigned char)(iIn >> j));
+       j+=4;       
+    }
 }
+
+
+/*
+;________________________________________________________
+;
+;             Pos_Char_C
+;
+;       Bot_8Out
+;
+;       Requires:       unsigned char input parameter,
+                        unsigned char position parameter
+;       Returns:        n/a
+;       Regs Affected:  n/a
+;
+;       Details: This routine adds the input character 'c'
+;                 into the position in 'pos'
+;________________________________________________________
+*/
+void Pos_Char_C(unsigned char pos, unsigned char c) 
+{
+  int i = 0;
+  unsigned char clear = 0x00;
+  for(i; i < 8; i++)
+  {
+    Clear_7Seg(clear++);
+  }
+  
+  Char_7Seg_C(pos, c);
+}
+
+
 
 
 
