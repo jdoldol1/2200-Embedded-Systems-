@@ -45,8 +45,7 @@ void Bot_8Out_C(unsigned char c)
   Char_7Seg_C(6,val);
   
   val = c & 0x0f;
-  Char_7Seg_C(7,val);
-  
+  Char_7Seg_C(7,val);  
 }
 
 /*
@@ -65,6 +64,7 @@ void Bot_8Out_C(unsigned char c)
 */
 void Bot_16Out(unsigned int iIn)
 {
+	unsigned int val;
 	
 }
 /*
@@ -126,7 +126,7 @@ void Char_7Seg_C_D(unsigned char Pos, unsigned char character)
 /*
 ;________________________________________________________
 ;
-;             Char_7Seg_C
+;             Clear_7Seg_C
 ;
 ;       Requires:     Pos has position 
 ;       Returns:        n/a
@@ -142,7 +142,7 @@ void Clear_7Seg(unsigned char Pos)
 	PORTB = Pos;
 
 	PORTA = 0x02;
-	PORTA = 0x02;
+	PORTA = 0x03;
 
 	PORTB = 0x08;
 
