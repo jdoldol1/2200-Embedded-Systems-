@@ -41,11 +41,11 @@ void Bot_8Out_C(unsigned char c)
   Clear_7Seg(0x04);
   Clear_7Seg(0x05);
   
-  val = c >> 4;
-  Char_7Seg_C(6,val);
+  val = c >> 4;			//move upper nibble to lower
+  Char_7Seg_C(6,val); //send nible to poisition 6
   
-  val = c & 0x0f;
-  Char_7Seg_C(7,val);  
+  val = c & 0x0f;		//only lower nibble needed
+  Char_7Seg_C(7,val);  //send lower nible to position 7
 }
 
 /*
@@ -65,7 +65,27 @@ void Bot_8Out_C(unsigned char c)
 void Bot_16Out(unsigned int iIn)
 {
 	unsigned int val;
-	
+
+	val = c & 0x000f;
+	Char_7Seg_C(7,val);
+
+	val = c >> 4;
+	Char_7Seg_C(6,val);
+
+	val = c >> 8;	//place second nibble to lowest
+	Char_7Seg_C(5,val);
+
+	val = c >> 12; //place highest nibble to lowest
+	Char_7Seg_C(4,val);
+
+	////or use this for loop
+	//int pos = 4;;
+	//for (int i = 12; i > 0; i -= 4)
+	//{
+	//	val = c >> i; //place current nibble to lowest
+	//	Char_7Seg_C(pos++, val);
+	//}
+	//	
 }
 /*
 ;________________________________________________________
@@ -90,7 +110,7 @@ void Char_7Seg_C(unsigned char pos, unsigned char c)
   PORTA = 0x02;
   PORTA = 0x03;
   
-  PORTB = (c|=0x08);
+  PORTB = (c|=0x80); //no decimal point
   
   PORTA = 0x00;
   PARTA = 0x01;
@@ -206,7 +226,16 @@ void LEDS_7Seg_Init_C(void)
 */
 void Top_8Out_C(unsigned char pos)
 {
+	unsigned char val;
 
+	Clear_7Seg(0x00);
+	Clear_7Seg(0x01);
+
+	val = c >> 4;			//move upper nibble to lower
+	Char_7Seg_C(2, val); //send nible to poisition 6
+
+	val = c & 0x0f;		//only lower nibble needed
+	Char_7Seg_C(3, val);  //send lower nible to position 7
 }
 
 /*
@@ -224,7 +253,31 @@ void Top_8Out_C(unsigned char pos)
 ;________________________________________________________
 */
 
+void Top_16Out_C(unsigned int iIn)
+{
+	unsigned int val;
 
+	val = c & 0x000f;
+	Char_7Seg_C(3,val);
+
+	val = c >> 4;
+	Char_7Seg_C(2,val);
+
+	val = c >> 8;	//place second nibble to lowest
+	Char_7Seg_C(1,val);
+
+	val = c >> 12; //place highest nibble to lowest
+	Char_7Seg_C(0,val);
+
+	////or use this for loop
+	////not sure about his
+	//int pos = 0;;
+	//for (int i = 12; i > 0; i -= 4)
+	//{
+	//	val = c >> i; //place current nibble to lowest
+	//	Char_7Seg_C(pos++, val);
+	//}
+}
 
 
 
