@@ -280,6 +280,37 @@ void Pos_Char_C(unsigned char pos, unsigned char c)
   Char_7Seg_C(pos, c);
 }
 
+/*
+;________________________________________________________
+;
+;             Char_Cust7Seg_C
+;
+;       Bot_8Out
+;
+;       Requires:       unsigned char input parameter,
+                        unsigned char position parameter
+;       Returns:        n/a
+;       Regs Affected:  n/a
+;
+;       Details: This routine adds the input character 'c'
+;                 into the position in 'pos'
+;________________________________________________________
+*/
+
+void Char_Cust7Seg_C(unsigned char pos, unsigned char c)  
+{
+  pos |= 0x50;
+  PORTB = pos;
+  
+  PORTA = 0x02;
+  PORTA = 0x03;
+  
+  PORTB = (c|=0x80); //no decimal point
+  
+  PORTA = 0x00;
+  PORTA = 0x01;
+
+}
 
 
 
