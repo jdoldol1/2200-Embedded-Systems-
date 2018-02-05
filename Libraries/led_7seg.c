@@ -66,26 +66,12 @@ void Bot_16Out(unsigned int iIn)
 {
 	unsigned int val;
 
-	val = c & 0x000f;
-	Char_7Seg_C(7,val);
+	val = c & 0x00ff;		//mask to obtain only two lower nibble
+	Char_7Seg_C(6,val);		//send out to position 6 & 7 
 
-	val = c >> 4;
-	Char_7Seg_C(6,val);
+	val = c >> 8;			//move upper two nibble to lowest
+	Char_7Seg_C(4,val);		//send out to position 4 & 5
 
-	val = c >> 8;	//place second nibble to lowest
-	Char_7Seg_C(5,val);
-
-	val = c >> 12; //place highest nibble to lowest
-	Char_7Seg_C(4,val);
-
-	////or use this for loop
-	//int pos = 4;;
-	//for (int i = 12; i > 0; i -= 4)
-	//{
-	//	val = c >> i; //place current nibble to lowest
-	//	Char_7Seg_C(pos++, val);
-	//}
-	//	
 }
 /*
 ;________________________________________________________
@@ -257,26 +243,11 @@ void Top_16Out_C(unsigned int iIn)
 {
 	unsigned int val;
 
-	val = c & 0x000f;
-	Char_7Seg_C(3,val);
+	val = c & 0x00ff;		//mask to keep two lower nibbles only
+	Char_7Seg_C(2,val);		//send out position 2 & 3
 
-	val = c >> 4;
-	Char_7Seg_C(2,val);
-
-	val = c >> 8;	//place second nibble to lowest
-	Char_7Seg_C(1,val);
-
-	val = c >> 12; //place highest nibble to lowest
-	Char_7Seg_C(0,val);
-
-	////or use this for loop
-	////not sure about his
-	//int pos = 0;;
-	//for (int i = 12; i > 0; i -= 4)
-	//{
-	//	val = c >> i; //place current nibble to lowest
-	//	Char_7Seg_C(pos++, val);
-	//}
+	val = c >> 8;			//move upper two bits to lowest
+	Char_7Seg_C(0,val);		//send out to position 0 & 1;
 }
 
 
