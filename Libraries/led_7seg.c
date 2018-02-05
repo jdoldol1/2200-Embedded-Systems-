@@ -41,11 +41,11 @@ void Bot_8Out_C(unsigned char c)
   Clear_7Seg(0x04);
   Clear_7Seg(0x05);
   
-  val = c >> 4;			//move upper nibble to lower
-  Char_7Seg_C(6,val); //send nible to poisition 6
+  val = c >> 4;			    //move upper nibble to lower
+  Char_7Seg_C(6,val);   //send nible to poisition 6
   
-  val = c & 0x0f;		//only lower nibble needed
-  Char_7Seg_C(7,val);  //send lower nible to position 7
+  val = c & 0x0f;		    //only lower nibble needed
+  Char_7Seg_C(7,val);   //send lower nible to position 7
 }
 
 /*
@@ -64,13 +64,13 @@ void Bot_8Out_C(unsigned char c)
 */
 void Bot_16Out(unsigned int iIn)
 {
-	unsigned int val;
+	unsigned char val;
 
-	val = c & 0x00ff;		//mask to obtain only two lower nibble
-	Char_7Seg_C(6,val);		//send out to position 6 & 7 
+	val = iIn & 0x00ff;		//mask to obtain only two lower nibble
+	Char_7Seg_C(7,val);		//send out to position 6 & 7 
 
-	val = c >> 8;			//move upper two nibble to lowest
-	Char_7Seg_C(4,val);		//send out to position 4 & 5
+	val = iIn >> 8;			//move upper two nibble to lowest
+	Char_7Seg_C(5,val);		//send out to position 4 & 5
 
 }
 /*
@@ -90,7 +90,7 @@ void Bot_16Out(unsigned int iIn)
 
 void Char_7Seg_C(unsigned char pos, unsigned char c) 
 {             
-  pos |= 0x05;
+  pos |= 0x50;
   PORTB = pos;
   
   PORTA = 0x02;
@@ -99,7 +99,7 @@ void Char_7Seg_C(unsigned char pos, unsigned char c)
   PORTB = (c|=0x80); //no decimal point
   
   PORTA = 0x00;
-  PARTA = 0x01;
+  PORTA = 0x01;
 }
 
 /*
@@ -144,13 +144,13 @@ void Char_7Seg_C_D(unsigned char Pos, unsigned char character)
 
 void Clear_7Seg(unsigned char Pos)
 {
-	Pos |= 0x07;
+	Pos |= 0x70;
 	PORTB = Pos;
 
 	PORTA = 0x02;
 	PORTA = 0x03;
 
-	PORTB = 0x08;
+	PORTB = 0x80;
 
 	PORTA = 0x00;
 	PORTA = 0x01;
@@ -176,8 +176,10 @@ void LEDS_7Seg_Init_C(void)
 {
 	signed char i = 0;
 	unsigned char Digit = 0;
+	
 	DDRA = 0x03;
 	DDRB = 0xff;
+	
 	PORTA = 0x03;
 
 	for (i = 8; i >= 0; i--)
@@ -210,7 +212,7 @@ void LEDS_7Seg_Init_C(void)
 		;upper two digits of row are blanked
 ;________________________________________________________
 */
-void Top_8Out_C(unsigned char pos)
+void Top_8Out_C(unsigned char c)
 {
 	unsigned char val;
 
@@ -241,12 +243,12 @@ void Top_8Out_C(unsigned char pos)
 
 void Top_16Out_C(unsigned int iIn)
 {
-	unsigned int val;
+	unsigned char val;
 
-	val = c & 0x00ff;		//mask to keep two lower nibbles only
+	val = iIn & 0x00ff;		//mask to keep two lower nibbles only
 	Char_7Seg_C(2,val);		//send out position 2 & 3
 
-	val = c >> 8;			//move upper two bits to lowest
+	val = iIn >> 8;			//move upper two bits to lowest
 	Char_7Seg_C(0,val);		//send out to position 0 & 1;
 }
 
