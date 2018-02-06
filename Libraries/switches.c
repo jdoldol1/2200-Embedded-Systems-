@@ -1,5 +1,5 @@
 #include "derivative.h"
-#include "Delay_C.h"
+#include "my_delays.h"
 
 /*
 ;________________________________________________________

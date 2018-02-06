@@ -3,9 +3,9 @@
 // Processor:		MC9S12XDP512
 // Xtal Speed:		16 MHz
 // Author:			John Doldol
-// Date:			DATE
+// Date:			  February 6, 2018
 
-// Details: A more detailed explanation of the program is entered here
+// Details:     8bit counter displays on 7segment LED with switches
 /********************************************************************/
 
 
@@ -16,6 +16,7 @@
 /********************************************************************/
  #include "my_delays.h"
  #include "led_7seg.h"
+ #include "switches.h"
 
 /********************************************************************/
 //		Prototypes
@@ -25,6 +26,10 @@
 /********************************************************************/
 //		Variables
 /********************************************************************/
+  unsigned char topcount;
+  unsigned char botcount;
+  unsigned char switches;
+  int toggle = 1;
 
 /********************************************************************/
 //		Lookups
@@ -41,9 +46,48 @@ _DISABLE_COP();
 // initializations
 /********************************************************************/
  
-  
-  for (;;)
-	
+  LEDS_7Seg_Init_C();
+  Sw_Init();
+  topcount = 0x00;
+  botcount = 0x00;
+  Top_8Out_C(topcount);
+  Bot_8Out_C(botcount);
+  for (;;) 
+  {
+      switches = Get_Switches();   
+	    
+	    switch(switches) 
+	    {
+	      case 0x10:
+	            topcount += 0x01; //increment topcount	            
+	            break;
+	      case 0x04:
+	            botcount -= 0x01;	//decrement botcount            
+	            break;            
+	      case 0x01:	                        
+	            topcount = 0x00;  //clear count values
+	            botcount = 0x00;	            
+	            break;
+	      case 0x02:      	            
+	            toggle = !toggle; //toggle boolean for display switch          
+              break;  
+	    }
+	    
+	    //display both counts
+	    if(toggle) 
+	    {
+	         Top_8Out_C(topcount);
+	         Bot_8Out_C(botcount);
+	    } 
+	    else 
+	    {
+    	     Top_8Out_C(botcount);
+    	     Bot_8Out_C(topcount);
+	    }
+	    
+	    //debounce
+	    Wait_for_Switches_up_mask(switches);
+  }   	
 }
 
 
