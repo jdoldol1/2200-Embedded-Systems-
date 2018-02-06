@@ -312,6 +312,37 @@ void Char_Cust7Seg_C(unsigned char pos, unsigned char c)
 
 }
 
+/*
+;________________________________________________________
+ 
+Front two 8 bits of bottom row display
+;________________________________________________________
+*/
+
+void BotFront_8Out_C(unsigned char c) 
+{
+  unsigned char val;
+  
+  val = c >> 4;			    //move upper nibble to lower
+  Char_7Seg_C(4,val);   //send nible to poisition 6
+  
+  val = c & 0x0f;		    //only lower nibble needed
+  Char_7Seg_C(5,val);   //send lower nible to position 7
+}
+
+void BotCust_8Out_C(unsigned char c) 
+{
+  unsigned char val;
+  
+  val = c >> 4;			    //move upper nibble to lower
+  Char_7Seg_C(6,val);   //send nible to poisition 6
+  
+  val = c & 0x0f;		    //only lower nibble needed
+  Char_7Seg_C(7,val);   //send lower nible to position 7
+}
+
+
+
 
 
 
