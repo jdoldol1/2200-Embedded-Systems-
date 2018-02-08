@@ -21,13 +21,13 @@
 /********************************************************************/
 //		Prototypes
 /********************************************************************/
-  void Inc(void);
-  void Dec(void);
+
 /********************************************************************/
 //		Variables
 /********************************************************************/
   unsigned int count;
   int loop;
+  int base;
 /********************************************************************/
 //		Lookups
 /********************************************************************/
@@ -47,48 +47,45 @@ _DISABLE_COP();
 	  Sw_Init();
 	  count = 0x0000;
 	  loop = 0;
-	  
+	  base = 1;
 	  for (;;) 
 	  {  
-	    Top_16Out_C(count);
+	    Top_16Out_C(count);	    
+			
+			
+			
+			if(loop > 5){
+				    base = 20;
+					}
+					
+					
 			switch(Get_Switches()) 
 			{
 			  case 0x10:
-					while(Get_Switches()==0x10)
-					{
-					  Inc();
-					}
+			    loop++;
+			    Delay_C(100);
+			    count += base;					
 					break;
 			  case 0x04:
-					while(Get_Switches()== 0x04)
-					{
-					  Dec();
-					}         
+			    loop++;
+			    count -= base;
+			    Delay_C(100);					        
 					break;            
 			  case 0x01:	                        
 					count = 0x0000;  //clear count values           
-					break;        	       
+					break;
+			  case 0x00:
+			    loop = 0;
+			    base = 1;
+			    break;
 			}
-			Delay_C(400);
-			ClearAll(); 
-			Delay_C(400); 	    
+			Top_16Out_C(count); 	    
 	  }    	
 }
 /********************************************************************/
 //		Functions
 /********************************************************************/
-void Inc(void) 
-    {
-       count += 0x0001;
-       Delay_C(25);
-       Top_16Out_C(count);
-    }
-void Dec(void)
-    {
-       count -= 0x0001;
-       Delay_C(25);
-       Top_16Out_C(count);
-    }
+
 
 /********************************************************************/
 //		Interrupt Service Routines

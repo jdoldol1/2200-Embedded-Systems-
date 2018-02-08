@@ -27,8 +27,8 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2100     4
-  _Copy    *toCopyDownBeg 0xC03C
+  _Range   pZeroOut       0x2100     6
+  _Copy    *toCopyDownBeg 0xC056
 } _startupData;
 
 *********************************************************************************************
@@ -37,9 +37,9 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             15     R     0xC000     0xC00E   ROM_C000
 .startData                        34     R     0xC00F     0xC030   ROM_C000
-NON_BANKED                        11     R     0xC031     0xC03B   ROM_C000
-.copy                              2     R     0xC03C     0xC03D   ROM_C000
-.text                            383     R   0xFE8000   0xFE817E   PAGE_FE
+NON_BANKED                        37     R     0xC031     0xC055   ROM_C000
+.copy                              2     R     0xC056     0xC057   ROM_C000
+.text                            335     R   0xFE8000   0xFE814E   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -688,12 +688,12 @@ NON_BANKED                        11     R     0xC031     0xC03B   ROM_C000
 .abs_section_3aa                   2   N/I      0x3AA      0x3AB   .absSeg644
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
-.common                            4   R/W     0x2100     0x2103   RAM
+.common                            6   R/W     0x2100     0x2105   RAM
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         1BF (dec:      447)
-READ_WRITE (R/W):      104 (dec:      260)
+READ_ONLY (R):         1A9 (dec:      425)
+READ_WRITE (R/W):      106 (dec:      262)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -1235,7 +1235,7 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _PITMTLD1                                  347       1       1       0   .abs_section_347
      _XGCHID                                    382       1       1       0   .abs_section_382
      _XGCCR                                     39D       1       1       0   .abs_section_39d
-     _PORTAB                                      0       2       2      19   .abs_section_0
+     _PORTAB                                      0       2       2      13   .abs_section_0
      _DDRAB                                       2       2       2       2   .abs_section_2
      _PORTCD                                      4       2       2       0   .abs_section_4
      _DDRCD                                       6       2       2       0   .abs_section_6
@@ -1358,15 +1358,14 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    FE8000      64     100       2   .text       
-     Inc                                     FE8064      13      19       2   .text       
-     Dec                                     FE8077      13      19       2   .text       
+     main                                    FE8000      87     135       2   .text       
 - VARIABLES:
-     count                                     2100       2       2       7   .common     
-     loop                                      2102       2       2       1   .common     
+     count                                     2100       2       2       8   .common     
+     loop                                      2102       2       2       5   .common     
+     base                                      2104       2       2       5   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE808A      29      41       2   .text       
+     Init                                    FE8087      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
@@ -1375,23 +1374,22 @@ MODULE:                 -- Start12.c.o --
 MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
 - PROCEDURES:
      _ISHRU                                    C031       B      11       1   NON_BANKED  
+     _CASE_SEARCH_8_BYTE                       C03C      1A      26       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- led_7seg.c.o --
 - PROCEDURES:
-     Char_7Seg_C                             FE80B3      1C      28       2   .text       
-     Clear_7Seg                              FE80CF      18      24       2   .text       
-     LEDS_7Seg_Init_C                        FE80E7      2C      44       2   .text       
-     Top_16Out_C                             FE8113      29      41       6   .text       
-     ClearAll                                FE813C      15      21       2   .text       
+     Char_7Seg_C                             FE80B0      1C      28       2   .text       
+     LEDS_7Seg_Init_C                        FE80CC      2C      44       2   .text       
+     Top_16Out_C                             FE80F8      29      41       4   .text       
 - VARIABLES:
 MODULE:                 -- my_delays.c.o --
 - PROCEDURES:
-     Delay_C                                 FE8151       E      14      10   .text       
+     Delay_C                                 FE8121       E      14       6   .text       
 - VARIABLES:
 MODULE:                 -- switches.c.o --
 - PROCEDURES:
-     Sw_Init                                 FE815F       4       4       2   .text       
-     Get_Switches                            FE8163      1C      28       6   .text       
+     Sw_Init                                 FE812F       4       4       2   .text       
+     Get_Switches                            FE8133      1C      28       2   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1399,10 +1397,10 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     4    138      0
+  main.c.o                                     6    135      0
   Start12.c.o                                  0     56      0
-  rtshc12.c.o (ansixbi.lib)                    0     11      0
-  led_7seg.c.o                                 0    158      0
+  rtshc12.c.o (ansixbi.lib)                    0     37      0
+  led_7seg.c.o                                 0    113      0
   my_delays.c.o                                0     14      0
   switches.c.o                                 0     32      0
   other                                      256     36      2
@@ -1411,12 +1409,12 @@ MODULE STATISTIC
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  main Inc Dec Init Char_7Seg_C Clear_7Seg LEDS_7Seg_Init_C Top_16Out_C 
-  ClearAll Delay_C Sw_Init Get_Switches 
+  main Init Char_7Seg_C LEDS_7Seg_Init_C Top_16Out_C Delay_C Sw_Init 
+  Get_Switches 
 SECTION: ".init"
   _Startup 
 SECTION: "NON_BANKED"
-  _ISHRU 
+  _ISHRU _CASE_SEARCH_8_BYTE 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -2712,13 +2710,13 @@ SECTION: ".abs_section_3ac"
 SECTION: ".abs_section_3ae"
   _XGR7 
 SECTION: ".common"
-  count loop 
+  count loop base 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
      Name                                      Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
-     _PORTAB                                      0       2       2      19   .abs_section_0
+     _PORTAB                                      0       2       2      13   .abs_section_0
      _DDRAB                                       2       2       2       2   .abs_section_2
      _PORTCD                                      4       2       2       0   .abs_section_4
      _DDRCD                                       6       2       2       0   .abs_section_6
@@ -3365,22 +3363,20 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR5                                      3AA       2       2       0   .abs_section_3aa
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
-     count                                     2100       2       2       7   .common     
-     loop                                      2102       2       2       1   .common     
+     count                                     2100       2       2       8   .common     
+     loop                                      2102       2       2       5   .common     
+     base                                      2104       2       2       5   .common     
      _Startup                                  C000       F      15       0   .init       
      _ISHRU                                    C031       B      11       1   NON_BANKED  
-     main                                    FE8000      64     100       2   .text       
-     Inc                                     FE8064      13      19       2   .text       
-     Dec                                     FE8077      13      19       2   .text       
-     Init                                    FE808A      29      41       2   .text       
-     Char_7Seg_C                             FE80B3      1C      28       2   .text       
-     Clear_7Seg                              FE80CF      18      24       2   .text       
-     LEDS_7Seg_Init_C                        FE80E7      2C      44       2   .text       
-     Top_16Out_C                             FE8113      29      41       6   .text       
-     ClearAll                                FE813C      15      21       2   .text       
-     Delay_C                                 FE8151       E      14      10   .text       
-     Sw_Init                                 FE815F       4       4       2   .text       
-     Get_Switches                            FE8163      1C      28       6   .text       
+     _CASE_SEARCH_8_BYTE                       C03C      1A      26       1   NON_BANKED  
+     main                                    FE8000      87     135       2   .text       
+     Init                                    FE8087      29      41       2   .text       
+     Char_7Seg_C                             FE80B0      1C      28       2   .text       
+     LEDS_7Seg_Init_C                        FE80CC      2C      44       2   .text       
+     Top_16Out_C                             FE80F8      29      41       4   .text       
+     Delay_C                                 FE8121       E      14       6   .text       
+     Sw_Init                                 FE812F       4       4       2   .text       
+     Get_Switches                            FE8133      1C      28       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -3391,11 +3387,11 @@ rtshc12.c.o (ansixbi.lib):
   _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LINC _LDEC 
   _LMUL _LMULU16x32 _LMULS16x32 _lDivMod _LDIVU _NEG_P _LDIVS _LMODU _LMODS 
   _ILSEXT _COPY _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE 
-  _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL 
-  _FPCMP _PADD _PSUB _PINC _PDEC 
+  _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 _FCALL _FPCMP _PADD _PSUB _PINC 
+  _PDEC 
 led_7seg.c.o:
-  Bot_8Out_C Bot_16Out_C Char_7Seg_C_D Top_8Out_C Pos_Char_C Char_Cust7Seg_C 
-  BotFront_8Out_C BotCust_8Out_C 
+  Bot_8Out_C Bot_16Out_C Char_7Seg_C_D Clear_7Seg Top_8Out_C Pos_Char_C 
+  Char_Cust7Seg_C BotFront_8Out_C BotCust_8Out_C ClearAll 
 my_delays.c.o:
   Short_Delay Long_Delay 
 switches.c.o:
@@ -3407,7 +3403,7 @@ rtshc12.c.o (ansixbi.lib):
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC03C ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC056 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3415,16 +3411,12 @@ Filling bytes inserted
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
-main                      USES LEDS_7Seg_Init_C Sw_Init count loop Top_16Out_C 
-                                Get_Switches Inc Dec Delay_C ClearAll 
-Inc                       USES count Delay_C Top_16Out_C 
-Dec                       USES count Delay_C Top_16Out_C 
+main                      USES LEDS_7Seg_Init_C Sw_Init count loop base 
+                                Top_16Out_C Get_Switches _CASE_SEARCH_8_BYTE Delay_C 
 Init                      USES _startupData 
 Char_7Seg_C               USES _PORTAB 
-Clear_7Seg                USES _PORTAB 
 LEDS_7Seg_Init_C          USES _DDRAB _PORTAB 
 Top_16Out_C               USES _ISHRU Char_7Seg_C 
-ClearAll                  USES Clear_7Seg 
 Sw_Init                   USES _ATD1DIEN 
 Get_Switches              USES _PT01AD1 Delay_C 
 
@@ -3449,24 +3441,10 @@ DEPENDENCY TREE
  |  |  | 
  |  |  +- Delay_C             
  |  |       
- |  +- Inc                 
- |  |  | 
- |  |  +- Delay_C              (see above)
- |  |  |  
- |  |  +- Top_16Out_C          (see above)
- |  |     
- |  +- Dec                 
- |  |  | 
- |  |  +- Delay_C              (see above)
- |  |  |  
- |  |  +- Top_16Out_C          (see above)
- |  |     
+ |  +- _CASE_SEARCH_8_BYTE 
+ |  |    
  |  +- Delay_C              (see above)
- |  |  
- |  +- ClearAll            
- |     | 
- |     +- Clear_7Seg          
- |          
+ |     
  +- _Startup            
     | 
     +- Init                
@@ -3480,5 +3458,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 6
-Total size of all blocks to be downloaded: 447
+Total size of all blocks to be downloaded: 425
 
