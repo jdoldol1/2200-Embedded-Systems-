@@ -341,8 +341,21 @@ void BotCust_8Out_C(unsigned char c)
   Char_7Seg_C(7,val);   //send lower nible to position 7
 }
 
+/*
+;________________________________________________________
+ 
+Clear All 7SegLEDS
+;________________________________________________________
+*/
 
-
+void ClearAll(void) 
+{ 
+  int i;
+  for(i = 0; i < 7; ++i) 
+    {
+      Clear_7Seg(i);
+    }
+}
 
 
 

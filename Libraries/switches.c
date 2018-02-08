@@ -81,5 +81,7 @@ void Wait_for_Switches_up(void)
 
 void Wait_for_Switches_up_mask(unsigned char mask)
 {
-  while(PT1AD1 & mask){}
-}                 
+  while(PT1AD1 & mask){};
+}      
+
+           
