@@ -13,6 +13,8 @@
 #include "derivative.h"      	/* derivative-specific definitions 	*/
 #include "LCD_C.h"
 #include "my_delays.h"
+#include "switches.h"
+#include "led_7seg.h"
 /********************************************************************/
 //		Library includes
 /********************************************************************/
@@ -21,12 +23,15 @@
 /********************************************************************/
 //		Prototypes
 /********************************************************************/
-
+void ToggleIncChar(void);
 
 /********************************************************************/
 //		Variables
 /********************************************************************/
 unsigned char value;
+unsigned char screenvalue;
+unsigned char switches;
+int column;
 int toggle;
 /********************************************************************/
 //		Lookups
@@ -36,20 +41,13 @@ int toggle;
 void main() 
 
 {
-  /* put your own code here */
-  
-  char str[19] = "My Cats"; 
+  /* put your own code here */   
 	EnableInterrupts;
 	
 	lcdInit();                //initialize the LCD
 	
 	Set_R_C(1,15);             //put an X out to the screen row 1 col 15
-	lcdData('a');
-	
-
-	Set_R_C(3,10);             // Set_R_C(row,col)
-	lcdString(str);
-	
+	lcdData('a');  	
 	
 	Set_R_C(0,8);
 	lcdString("John Doldol");
@@ -59,12 +57,49 @@ void main()
 	//Populate the LCD labels
 	lcdLabels("Label 0:","Label 1:","Label 2:","Label 3:");
 	
-  value =0x41;
+  value = 'A';
   toggle = 1;
-
-  for(;;) {
   
-    Set_R_C(1,15);
+  column = 8;
+  screenvalue = 0x00;
+  LEDS_7Seg_Init_C();
+  Sw_Init();
+
+  for(;;) 
+  {  
+      //ToggleIncChar();
+      
+      switches = Get_Switches();
+      switch(switches) 
+      {
+        case 0x10:
+          screenvalue += 0x01;
+          break;
+        case 0x04:
+          screenvalue -= 0x01;
+          break; 
+        case 0x01:
+        column++;
+          Set_R_C(2,column);
+          lcdData(screenvalue);
+          break;
+      }      
+      
+      Bot_8Out_C(screenvalue);
+      Wait_for_Switches_up_mask(switches);
+    _FEED_COP(); /* feeds the dog */
+  } /* loop forever */
+  /* please make sure that you never leave main */
+}
+
+
+/********************************************************************/
+//		Functions
+/********************************************************************/
+
+void ToggleIncChar(void) 
+{
+     Set_R_C(1,15);
     lcdData(value);
     
     if(toggle)
@@ -78,24 +113,13 @@ void main()
          Delay_C(2000);
     }           
     
-    if(value == 0x7a)
+    if(value == 'z')
     {
         value = 0x41; 
     }
     
     toggle = !toggle;
-    
-    _FEED_COP(); /* feeds the dog */
-  } /* loop forever */
-  /* please make sure that you never leave main */
 }
-
-
-/********************************************************************/
-//		Functions
-/********************************************************************/
-
-
 
 
 /********************************************************************/

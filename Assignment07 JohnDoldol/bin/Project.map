@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\jdoldol1\Documents\Assignment07 JohnDoldol\bin\Project.abs"
+PROGRAM "C:\Users\jdoldol1\Documents\GitHub\CMPE2200-Embedded-Systems-\Assignment07 JohnDoldol\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -18,6 +18,8 @@ Start12.c.o                             Model: BANKED,        Lang: ANSI-C
 rtshc12.c.o (ansixbi.lib)               Model: BANKED,        Lang: ANSI-C
 LCD_C.c.o                               Model: BANKED,        Lang: ANSI-C
 my_delays.c.o                           Model: BANKED,        Lang: ANSI-C
+switches.c.o                            Model: BANKED,        Lang: ANSI-C
+led_7seg.c.o                            Model: BANKED,        Lang: ANSI-C
 
 *********************************************************************************************
 STARTUP SECTION
@@ -26,7 +28,7 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2100     3
+  _Range   pZeroOut       0x2100     7
   _Copy    *toCopyDownBeg 0xC075
 } _startupData;
 
@@ -39,7 +41,7 @@ Section Name                    Size  Type     From       To       Segment
 .rodata1                          48     R     0xC031     0xC060   ROM_C000
 NON_BANKED                        20     R     0xC061     0xC074   ROM_C000
 .copy                              2     R     0xC075     0xC076   ROM_C000
-.text                            670     R   0xFE8000   0xFE829D   PAGE_FE
+.text                            794     R   0xFE8000   0xFE8319   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -688,12 +690,12 @@ NON_BANKED                        20     R     0xC061     0xC074   ROM_C000
 .abs_section_3aa                   2   N/I      0x3AA      0x3AB   .absSeg644
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
-.common                            3   R/W     0x2100     0x2102   RAM
+.common                            7   R/W     0x2100     0x2106   RAM
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         317 (dec:      791)
-READ_WRITE (R/W):      103 (dec:      259)
+READ_ONLY (R):         393 (dec:      915)
+READ_WRITE (R/W):      107 (dec:      263)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -1235,8 +1237,8 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _PITMTLD1                                  347       1       1       0   .abs_section_347
      _XGCHID                                    382       1       1       0   .abs_section_382
      _XGCCR                                     39D       1       1       0   .abs_section_39d
-     _PORTAB                                      0       2       2       0   .abs_section_0
-     _DDRAB                                       2       2       2       0   .abs_section_2
+     _PORTAB                                      0       2       2      19   .abs_section_0
+     _DDRAB                                       2       2       2       2   .abs_section_2
      _PORTCD                                      4       2       2       0   .abs_section_4
      _DDRCD                                       6       2       2       0   .abs_section_6
      _PARTID                                     1A       2       2       0   .abs_section_1a
@@ -1262,7 +1264,7 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _ATD1CTL01                                  80       2       2       0   .abs_section_80
      _ATD1CTL23                                  82       2       2       0   .abs_section_82
      _ATD1CTL45                                  84       2       2       0   .abs_section_84
-     _ATD1DIEN                                   8C       2       2       0   .abs_section_8c
+     _ATD1DIEN                                   8C       2       2       1   .abs_section_8c
      _ATD1PTAD                                   8E       2       2       0   .abs_section_8e
      _ATD1DR0                                    90       2       2       0   .abs_section_90
      _ATD1DR1                                    92       2       2       0   .abs_section_92
@@ -1298,7 +1300,7 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _CAN2TXTSR                                 1FE       2       2       0   .abs_section_1fe
      _CAN3RXTSR                                 22E       2       2       0   .abs_section_22e
      _CAN3TXTSR                                 23E       2       2       0   .abs_section_23e
-     _PT01AD1                                   278       2       2       0   .abs_section_278
+     _PT01AD1                                   278       2       2       3   .abs_section_278
      _DDR01AD1                                  27A       2       2       0   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -1358,18 +1360,21 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    FE8000      EB     235       3   .text       
+     main                                    FE8000      B4     180       2   .text       
 - VARIABLES:
-     STRING.John.Doldol.2                      C031       C      12       1   .rodata1    
-     STRING.Label.0..3                         C03D       9       9       1   .rodata1    
-     STRING.Label.1..4                         C046       9       9       1   .rodata1    
-     STRING.Label.2..5                         C04F       9       9       1   .rodata1    
-     STRING.Label.3..6                         C058       9       9       1   .rodata1    
-     value                                     2100       1       1       8   .common     
-     toggle                                    2101       2       2       4   .common     
+     STRING.John.Doldol.1                      C031       C      12       1   .rodata1    
+     STRING.Label.0..2                         C03D       9       9       1   .rodata1    
+     STRING.Label.1..3                         C046       9       9       1   .rodata1    
+     STRING.Label.2..4                         C04F       9       9       1   .rodata1    
+     STRING.Label.3..5                         C058       9       9       1   .rodata1    
+     value                                     2100       1       1       1   .common     
+     screenvalue                               2101       1       1       5   .common     
+     switches                                  2102       1       1       2   .common     
+     column                                    2103       2       2       3   .common     
+     toggle                                    2105       2       2       1   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE80EB      29      41       2   .text       
+     Init                                    FE80B4      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
@@ -1381,25 +1386,38 @@ MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
 - VARIABLES:
 MODULE:                 -- LCD_C.c.o --
 - PROCEDURES:
-     lcdRWUp                                 FE8114       4       4       2   .text       
-     lcdEUp                                  FE8118       4       4       8   .text       
-     lcdEDown                                FE811C       4       4       8   .text       
-     lcdRSUp                                 FE8120       4       4       2   .text       
-     lcdRSDown                               FE8124       4       4       2   .text       
-     lcdSDelay                               FE8128       7       7       6   .text       
-     lcdLDelay                               FE812F       7       7       8   .text       
-     lcdInit                                 FE8136      4A      74       2   .text       
-     lcdInst                                 FE8180      20      32       2   .text       
-     lcdData                                 FE81A0      20      32       8   .text       
-     lcdBusy                                 FE81C0      2A      42       6   .text       
-     lcdAddr                                 FE81EA      10      16       2   .text       
-     lcdString                               FE81FA      28      40      12   .text       
-     Set_R_C                                 FE8222      37      55      12   .text       
-     lcdLabels                               FE8259      37      55       2   .text       
+     lcdRWUp                                 FE80DD       4       4       2   .text       
+     lcdEUp                                  FE80E1       4       4       8   .text       
+     lcdEDown                                FE80E5       4       4       8   .text       
+     lcdRSUp                                 FE80E9       4       4       2   .text       
+     lcdRSDown                               FE80ED       4       4       2   .text       
+     lcdSDelay                               FE80F1       7       7       6   .text       
+     lcdLDelay                               FE80F8       7       7       8   .text       
+     lcdInit                                 FE80FF      4A      74       2   .text       
+     lcdInst                                 FE8149      20      32       2   .text       
+     lcdData                                 FE8169      20      32       8   .text       
+     lcdBusy                                 FE8189      2A      42       6   .text       
+     lcdAddr                                 FE81B3      10      16       2   .text       
+     lcdString                               FE81C3      28      40      10   .text       
+     Set_R_C                                 FE81EB      37      55      12   .text       
+     lcdLabels                               FE8222      37      55       2   .text       
 - VARIABLES:
 MODULE:                 -- my_delays.c.o --
 - PROCEDURES:
-     Delay_C                                 FE8290       E      14       2   .text       
+     Delay_C                                 FE8259       E      14       2   .text       
+- VARIABLES:
+MODULE:                 -- switches.c.o --
+- PROCEDURES:
+     Sw_Init                                 FE8267       4       4       2   .text       
+     Get_Switches                            FE826B      1C      28       2   .text       
+     Wait_for_Switches_up_mask               FE8287       A      10       2   .text       
+- VARIABLES:
+MODULE:                 -- led_7seg.c.o --
+- PROCEDURES:
+     Bot_8Out_C                              FE8291      29      41       2   .text       
+     Char_7Seg_C                             FE82BA      1C      28       2   .text       
+     Clear_7Seg                              FE82D6      18      24       4   .text       
+     LEDS_7Seg_Init_C                        FE82EE      2C      44       2   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1407,11 +1425,13 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     3    235     48
+  main.c.o                                     7    180     48
   Start12.c.o                                  0     56      0
   rtshc12.c.o (ansixbi.lib)                    0     20      0
   LCD_C.c.o                                    0    380      0
   my_delays.c.o                                0     14      0
+  switches.c.o                                 0     42      0
+  led_7seg.c.o                                 0    137      0
   other                                      256     36      2
 
 *********************************************************************************************
@@ -1420,11 +1440,13 @@ SECTION USE IN OBJECT-ALLOCATION SECTION
 SECTION: ".text"
   main Init lcdRWUp lcdEUp lcdEDown lcdRSUp lcdRSDown lcdSDelay lcdLDelay 
   lcdInit lcdInst lcdData lcdBusy lcdAddr lcdString Set_R_C lcdLabels Delay_C 
+  Sw_Init Get_Switches Wait_for_Switches_up_mask Bot_8Out_C Char_7Seg_C 
+  Clear_7Seg LEDS_7Seg_Init_C 
 SECTION: ".init"
   _Startup 
 SECTION: ".rodata1"
-  STRING.John.Doldol.2 STRING.Label.0..3 STRING.Label.1..4 STRING.Label.2..5 
-  STRING.Label.3..6 
+  STRING.John.Doldol.1 STRING.Label.0..2 STRING.Label.1..3 STRING.Label.2..4 
+  STRING.Label.3..5 
 SECTION: "NON_BANKED"
   _CASE_CHECKED_BYTE 
 SECTION: ".abs_section_8"
@@ -2722,14 +2744,14 @@ SECTION: ".abs_section_3ac"
 SECTION: ".abs_section_3ae"
   _XGR7 
 SECTION: ".common"
-  value toggle 
+  value screenvalue switches column toggle 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
      Name                                      Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
-     _PORTAB                                      0       2       2       0   .abs_section_0
-     _DDRAB                                       2       2       2       0   .abs_section_2
+     _PORTAB                                      0       2       2      19   .abs_section_0
+     _DDRAB                                       2       2       2       2   .abs_section_2
      _PORTCD                                      4       2       2       0   .abs_section_4
      _DDRCD                                       6       2       2       0   .abs_section_6
      _PORTE                                       8       1       1       0   .abs_section_8
@@ -2826,7 +2848,7 @@ OBJECT LIST SORTED BY ADDRESS
      _ATD1TEST1                                  89       1       1       0   .abs_section_89
      _ATD1STAT2                                  8A       1       1       0   .abs_section_8a
      _ATD1STAT1                                  8B       1       1       0   .abs_section_8b
-     _ATD1DIEN                                   8C       2       2       0   .abs_section_8c
+     _ATD1DIEN                                   8C       2       2       1   .abs_section_8c
      _ATD1PTAD                                   8E       2       2       0   .abs_section_8e
      _ATD1DR0                                    90       2       2       0   .abs_section_90
      _ATD1DR1                                    92       2       2       0   .abs_section_92
@@ -3232,7 +3254,7 @@ OBJECT LIST SORTED BY ADDRESS
      _DDR1AD0                                   273       1       1       0   .abs_section_273
      _RDR1AD0                                   275       1       1       0   .abs_section_275
      _PER1AD0                                   277       1       1       0   .abs_section_277
-     _PT01AD1                                   278       2       2       0   .abs_section_278
+     _PT01AD1                                   278       2       2       3   .abs_section_278
      _DDR01AD1                                  27A       2       2       0   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -3375,38 +3397,50 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR5                                      3AA       2       2       0   .abs_section_3aa
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
-     value                                     2100       1       1       8   .common     
-     toggle                                    2101       2       2       4   .common     
+     value                                     2100       1       1       1   .common     
+     screenvalue                               2101       1       1       5   .common     
+     switches                                  2102       1       1       2   .common     
+     column                                    2103       2       2       3   .common     
+     toggle                                    2105       2       2       1   .common     
      _Startup                                  C000       F      15       0   .init       
-     STRING.John.Doldol.2                      C031       C      12       1   .rodata1    
-     STRING.Label.0..3                         C03D       9       9       1   .rodata1    
-     STRING.Label.1..4                         C046       9       9       1   .rodata1    
-     STRING.Label.2..5                         C04F       9       9       1   .rodata1    
-     STRING.Label.3..6                         C058       9       9       1   .rodata1    
+     STRING.John.Doldol.1                      C031       C      12       1   .rodata1    
+     STRING.Label.0..2                         C03D       9       9       1   .rodata1    
+     STRING.Label.1..3                         C046       9       9       1   .rodata1    
+     STRING.Label.2..4                         C04F       9       9       1   .rodata1    
+     STRING.Label.3..5                         C058       9       9       1   .rodata1    
      _CASE_CHECKED_BYTE                        C061      14      20       1   NON_BANKED  
-     main                                    FE8000      EB     235       3   .text       
-     Init                                    FE80EB      29      41       2   .text       
-     lcdRWUp                                 FE8114       4       4       2   .text       
-     lcdEUp                                  FE8118       4       4       8   .text       
-     lcdEDown                                FE811C       4       4       8   .text       
-     lcdRSUp                                 FE8120       4       4       2   .text       
-     lcdRSDown                               FE8124       4       4       2   .text       
-     lcdSDelay                               FE8128       7       7       6   .text       
-     lcdLDelay                               FE812F       7       7       8   .text       
-     lcdInit                                 FE8136      4A      74       2   .text       
-     lcdInst                                 FE8180      20      32       2   .text       
-     lcdData                                 FE81A0      20      32       8   .text       
-     lcdBusy                                 FE81C0      2A      42       6   .text       
-     lcdAddr                                 FE81EA      10      16       2   .text       
-     lcdString                               FE81FA      28      40      12   .text       
-     Set_R_C                                 FE8222      37      55      12   .text       
-     lcdLabels                               FE8259      37      55       2   .text       
-     Delay_C                                 FE8290       E      14       2   .text       
+     main                                    FE8000      B4     180       2   .text       
+     Init                                    FE80B4      29      41       2   .text       
+     lcdRWUp                                 FE80DD       4       4       2   .text       
+     lcdEUp                                  FE80E1       4       4       8   .text       
+     lcdEDown                                FE80E5       4       4       8   .text       
+     lcdRSUp                                 FE80E9       4       4       2   .text       
+     lcdRSDown                               FE80ED       4       4       2   .text       
+     lcdSDelay                               FE80F1       7       7       6   .text       
+     lcdLDelay                               FE80F8       7       7       8   .text       
+     lcdInit                                 FE80FF      4A      74       2   .text       
+     lcdInst                                 FE8149      20      32       2   .text       
+     lcdData                                 FE8169      20      32       8   .text       
+     lcdBusy                                 FE8189      2A      42       6   .text       
+     lcdAddr                                 FE81B3      10      16       2   .text       
+     lcdString                               FE81C3      28      40      10   .text       
+     Set_R_C                                 FE81EB      37      55      12   .text       
+     lcdLabels                               FE8222      37      55       2   .text       
+     Delay_C                                 FE8259       E      14       2   .text       
+     Sw_Init                                 FE8267       4       4       2   .text       
+     Get_Switches                            FE826B      1C      28       2   .text       
+     Wait_for_Switches_up_mask               FE8287       A      10       2   .text       
+     Bot_8Out_C                              FE8291      29      41       2   .text       
+     Char_7Seg_C                             FE82BA      1C      28       2   .text       
+     Clear_7Seg                              FE82D6      18      24       4   .text       
+     LEDS_7Seg_Init_C                        FE82EE      2C      44       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
+main.c.o:
+  ToggleIncChar 
 rtshc12.c.o (ansixbi.lib):
   _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
   _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LINC 
@@ -3418,6 +3452,11 @@ LCD_C.c.o:
   lcdRWDown lcdCGAddr lcdClear 
 my_delays.c.o:
   Short_Delay Long_Delay 
+switches.c.o:
+  Wait_for_Switches_up 
+led_7seg.c.o:
+  Bot_16Out_C Char_7Seg_C_D Top_8Out_C Top_16Out_C Pos_Char_C Char_Cust7Seg_C 
+  BotFront_8Out_C BotCust_8Out_C ClearAll 
 NOT USED VARIABLES
 rtshc12.c.o (ansixbi.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
@@ -3433,10 +3472,11 @@ Filling bytes inserted
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
-main                      USES lcdInit main lcdData Set_R_C lcdString 
-                                STRING.John.Doldol.2 STRING.Label.0..3 STRING.Label.1..4 
-                                STRING.Label.2..5 STRING.Label.3..6 lcdLabels value toggle 
-                                Delay_C 
+main                      USES lcdInit Set_R_C lcdData STRING.John.Doldol.1 
+                                lcdString STRING.Label.0..2 STRING.Label.1..3 
+                                STRING.Label.2..4 STRING.Label.3..5 lcdLabels value toggle 
+                                column screenvalue LEDS_7Seg_Init_C Sw_Init 
+                                Get_Switches switches Bot_8Out_C Wait_for_Switches_up_mask 
 Init                      USES _startupData 
 lcdRWUp                   USES _PORTK 
 lcdEUp                    USES _PORTK 
@@ -3455,6 +3495,13 @@ lcdAddr                   USES lcdBusy lcdInst
 lcdString                 USES lcdData 
 Set_R_C                   USES _CASE_CHECKED_BYTE lcdAddr 
 lcdLabels                 USES Set_R_C lcdString 
+Sw_Init                   USES _ATD1DIEN 
+Get_Switches              USES _PT01AD1 Delay_C 
+Wait_for_Switches_up_mask USES _PT01AD1 
+Bot_8Out_C                USES Clear_7Seg Char_7Seg_C 
+Char_7Seg_C               USES _PORTAB 
+Clear_7Seg                USES _PORTAB 
+LEDS_7Seg_Init_C          USES _DDRAB _PORTAB 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -3471,34 +3518,24 @@ DEPENDENCY TREE
  |  |  |    
  |  |  +- lcdEDown            
  |  |       
- |  +- lcdData             
- |  |  | 
- |  |  +- lcdBusy             
- |  |  |  | 
- |  |  |  +- lcdRSDown           
- |  |  |  |    
- |  |  |  +- lcdRWUp             
- |  |  |  |    
- |  |  |  +- lcdSDelay           
- |  |  |  |    
- |  |  |  +- lcdEUp               (see above)
- |  |  |  |  
- |  |  |  +- lcdEDown             (see above)
- |  |  |     
- |  |  +- lcdRSUp             
- |  |  |    
- |  |  +- lcdEUp               (see above)
- |  |  |  
- |  |  +- lcdEDown             (see above)
- |  |     
  |  +- Set_R_C             
  |  |  | 
  |  |  +- _CASE_CHECKED_BYTE  
  |  |  |    
  |  |  +- lcdAddr             
  |  |     | 
- |  |     +- lcdBusy              (see above)
- |  |     |  
+ |  |     +- lcdBusy             
+ |  |     |  | 
+ |  |     |  +- lcdRSDown           
+ |  |     |  |    
+ |  |     |  +- lcdRWUp             
+ |  |     |  |    
+ |  |     |  +- lcdSDelay           
+ |  |     |  |    
+ |  |     |  +- lcdEUp               (see above)
+ |  |     |  |  
+ |  |     |  +- lcdEDown             (see above)
+ |  |     |     
  |  |     +- lcdInst             
  |  |        | 
  |  |        +- lcdBusy              (see above)
@@ -3509,6 +3546,16 @@ DEPENDENCY TREE
  |  |        |  
  |  |        +- lcdEDown             (see above)
  |  |           
+ |  +- lcdData             
+ |  |  | 
+ |  |  +- lcdBusy              (see above)
+ |  |  |  
+ |  |  +- lcdRSUp             
+ |  |  |    
+ |  |  +- lcdEUp               (see above)
+ |  |  |  
+ |  |  +- lcdEDown             (see above)
+ |  |     
  |  +- lcdString           
  |  |  | 
  |  |  +- lcdData              (see above)
@@ -3519,7 +3566,21 @@ DEPENDENCY TREE
  |  |  |  
  |  |  +- lcdString            (see above)
  |  |     
- |  +- Delay_C             
+ |  +- LEDS_7Seg_Init_C    
+ |  |    
+ |  +- Sw_Init             
+ |  |    
+ |  +- Get_Switches        
+ |  |  | 
+ |  |  +- Delay_C             
+ |  |       
+ |  +- Bot_8Out_C          
+ |  |  | 
+ |  |  +- Clear_7Seg          
+ |  |  |    
+ |  |  +- Char_7Seg_C         
+ |  |       
+ |  +- Wait_for_Switches_up_mask
  |       
  +- _Startup            
     | 
@@ -3534,5 +3595,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 791
+Total size of all blocks to be downloaded: 915
 
