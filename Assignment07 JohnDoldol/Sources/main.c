@@ -61,7 +61,7 @@ void main()
   toggle = 1;
   
   column = 8;
-  screenvalue = 0x00;
+  screenvalue = 'A';
   LEDS_7Seg_Init_C();
   Sw_Init();
 
@@ -80,8 +80,12 @@ void main()
           break; 
         case 0x01:
         column++;
+        
           Set_R_C(2,column);
           lcdData(screenvalue);
+          if(column == 19){
+          column = 8;
+          }
           break;
       }      
       
