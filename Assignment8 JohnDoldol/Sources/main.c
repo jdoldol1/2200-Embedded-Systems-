@@ -14,6 +14,7 @@
 #include "LCD_C.h"
 #include "switches.h"
 #include "led_7seg.h"
+#include "my_delays.h"
 /********************************************************************/
 //		Library includes
 /********************************************************************/
@@ -102,24 +103,26 @@ void main()
 	            boolean = 0;
             };
             break;     
-     }     
+     }    
             
       
       if(boolean)
       { 
-        Delay_C(200); 
+        Delay_C(100); 
         Clear_7Seg(0);
         Clear_7Seg(1);
         Clear_7Seg(2);
         Clear_7Seg(3);
-        Delay_C(200);               
-      }      
-                    
-        
-      Top_16Out_C(value); 
-      Delay_C(150);
-      Clear_7Seg(cursor);
-      Delay_C(150);      
+        Delay_C(100);
+        Top_16Out_C(value);               
+      } 
+      else
+      {
+        Top_16Out_C(value); 
+        Delay_C(100);
+        Clear_7Seg(cursor);
+        Delay_C(100);  
+      }             
       
       Wait_for_Switches_up_mask(switches);
       _FEED_COP(); /* feeds the dog */
