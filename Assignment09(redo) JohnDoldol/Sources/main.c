@@ -51,7 +51,7 @@ void main()
   Sw_Init();   
   
   lcdLabels("Input Diameter:","Circle Area:","Sphere Area:","Sphere Vol:");
-  diameter = 18;
+  diameter = 9;
   radius = diameter / 2.0;
   circlearea = radius * radius * _M_PI;
   spherearea = circlearea * 4;
@@ -61,7 +61,7 @@ void main()
   {    
        
        Set_R_C(0,16);
-       sprintf(s,"%f",radius * 2);
+       sprintf(s,"%d",(int)diameter);
        lcdString(s);
        
        Set_R_C(1,13);
