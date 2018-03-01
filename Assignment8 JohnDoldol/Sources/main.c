@@ -33,6 +33,8 @@ unsigned char switches;
 unsigned int value;
 int boolean;
 int cursor;
+int counter;
+int toggle;
 /********************************************************************/
 //		Lookups
 /********************************************************************/
@@ -48,7 +50,9 @@ void main()
   LEDS_7Seg_Init_C();
   Sw_Init(); 
   value = 0x0000;
+  counter = 0;
   boolean = 0;
+  toggle = 0;
   cursor = 3;
   for(;;) 
   {  
@@ -104,26 +108,34 @@ void main()
             };
             break;     
      }    
-            
-      
-      if(boolean)
-      { 
-        Delay_C(100); 
-        Clear_7Seg(0);
-        Clear_7Seg(1);
-        Clear_7Seg(2);
-        Clear_7Seg(3);
-        Delay_C(100);
-        Top_16Out_C(value);               
-      } 
-      else
+     
+      if(counter % 25 == 0)
       {
-        Top_16Out_C(value); 
-        Delay_C(100);
-        Clear_7Seg(cursor);
-        Delay_C(100);  
-      }             
+        if(toggle)
+        {
+          Top_16Out_C(value); 
+          toggle = 0;
+        } 
+        else
+        {
+           if(boolean)
+           {
+              int i;
+              for (i = 0; i < 4; ++i)
+              {
+                 Clear_7Seg(i);
+              }
+           } 
+           else
+           {
+              Clear_7Seg(cursor);           
+           }
+           toggle = 1;
+        }         
+      } 
       
+      counter += 1;             
+      Delay_C(1);
       Wait_for_Switches_up_mask(switches);
       _FEED_COP(); /* feeds the dog */
   } /* loop forever */
