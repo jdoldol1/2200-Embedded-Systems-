@@ -34,7 +34,10 @@ unsigned int value;
 int boolean;
 int cursor;
 int counter;
+<<<<<<< HEAD
 int toggle;
+=======
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
 /********************************************************************/
 //		Lookups
 /********************************************************************/
@@ -109,6 +112,7 @@ void main()
             break;     
      }    
      
+<<<<<<< HEAD
       if(counter % 25 == 0)
       {
         if(toggle)
@@ -141,7 +145,56 @@ void main()
   } /* loop forever */
   /* please make sure that you never leave main */
 }
+=======
+      if(counter % 25 == 2)
+      {
+        Top_16Out_C(value); 
+      } 
+      else 
+      {
+        if(boolean) 
+        {               
+          int i;
+          for (i = 0; i < 4; ++i)
+          {
+             Clear_7Seg(i);
+          }
+        } 
+        else
+        {
+          Clear_7Seg(cursor);
+        }
+      }
+      counter += 1;             
+      Delay_C(1);
+      Wait_for_Switches_up_mask(switches);
+      _FEED_COP(); /* feeds the dog */
+  } /* loop forever */
+  /* please make sure that you never leave main */
+}
 
+
+/*****************************************
+ if(boolean)
+      { 
+        Delay_C(100); 
+        Clear_7Seg(0);
+        Clear_7Seg(1);
+        Clear_7Seg(2);
+        Clear_7Seg(3);
+        Delay_C(100);
+        Top_16Out_C(value);               
+      } 
+      else
+      {
+        Top_16Out_C(value); 
+        Delay_C(100);
+        Clear_7Seg(cursor);
+        Delay_C(100);  
+      }
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
+
+**************************************************/
 
 /********************************************************************/
 //		Functions

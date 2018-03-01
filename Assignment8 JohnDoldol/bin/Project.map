@@ -28,7 +28,11 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
+<<<<<<< HEAD
   _Range   pZeroOut       0x2100     11
+=======
+  _Range   pZeroOut       0x2100     9
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
   _Copy    *toCopyDownBeg 0xC078
 } _startupData;
 
@@ -41,7 +45,11 @@ Section Name                    Size  Type     From       To       Segment
 .rodata1                          35     R     0xC031     0xC053   ROM_C000
 NON_BANKED                        36     R     0xC054     0xC077   ROM_C000
 .copy                              2     R     0xC078     0xC079   ROM_C000
+<<<<<<< HEAD
 .text                           1021     R   0xFE8000   0xFE83FC   PAGE_FE
+=======
+.text                           1004     R   0xFE8000   0xFE83EB   PAGE_FE
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -690,12 +698,21 @@ NON_BANKED                        36     R     0xC054     0xC077   ROM_C000
 .abs_section_3aa                   2   N/I      0x3AA      0x3AB   .absSeg644
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
+<<<<<<< HEAD
 .common                           11   R/W     0x2100     0x210A   RAM
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
 READ_ONLY (R):         479 (dec:     1145)
 READ_WRITE (R/W):      10B (dec:      267)
+=======
+.common                            9   R/W     0x2100     0x2108   RAM
+.vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
+
+Summary of section sizes per section type:
+READ_ONLY (R):         468 (dec:     1128)
+READ_WRITE (R/W):      109 (dec:      265)
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -1360,9 +1377,15 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
+<<<<<<< HEAD
      main                                    FE8000     145     325       4   .text       
      HexToBCD                                FE8145      3A      58       2   .text       
      CursorValue                             FE817F      18      24       4   .text       
+=======
+     main                                    FE8000     134     308       3   .text       
+     HexToBCD                                FE8134      3A      58       2   .text       
+     CursorValue                             FE816E      18      24       4   .text       
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
 - VARIABLES:
      STRING.Input.number.1                     C031       D      13       1   .rodata1    
      STRING.too.high..2                        C03E       A      10       1   .rodata1    
@@ -1372,10 +1395,16 @@ MODULE:                 -- main.c.o --
      boolean                                   2103       2       2       4   .common     
      cursor                                    2105       2       2      10   .common     
      counter                                   2107       2       2       3   .common     
+<<<<<<< HEAD
      toggle                                    2109       2       2       4   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
      Init                                    FE8197      29      41       2   .text       
+=======
+MODULE:                 -- Start12.c.o --
+- PROCEDURES:
+     Init                                    FE8186      29      41       2   .text       
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
@@ -1389,6 +1418,7 @@ MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
 - VARIABLES:
 MODULE:                 -- led_7seg.c.o --
 - PROCEDURES:
+<<<<<<< HEAD
      Bot_16Out_C                             FE81C0      2C      44       2   .text       
      Char_7Seg_C                             FE81EC      1C      28       4   .text       
      Clear_7Seg                              FE8208      18      24       4   .text       
@@ -1422,6 +1452,41 @@ MODULE:                 -- switches.c.o --
 MODULE:                 -- my_delays.c.o --
 - PROCEDURES:
      Delay_C                                 FE83EF       E      14       4   .text       
+=======
+     Bot_16Out_C                             FE81AF      2C      44       2   .text       
+     Char_7Seg_C                             FE81DB      1C      28       4   .text       
+     Clear_7Seg                              FE81F7      18      24       4   .text       
+     LEDS_7Seg_Init_C                        FE820F      2C      44       2   .text       
+     Top_16Out_C                             FE823B      29      41       2   .text       
+- VARIABLES:
+MODULE:                 -- LCD_C.c.o --
+- PROCEDURES:
+     lcdRWUp                                 FE8264       4       4       2   .text       
+     lcdEUp                                  FE8268       4       4       8   .text       
+     lcdEDown                                FE826C       4       4       8   .text       
+     lcdRSUp                                 FE8270       4       4       2   .text       
+     lcdRSDown                               FE8274       4       4       2   .text       
+     lcdSDelay                               FE8278       7       7       6   .text       
+     lcdLDelay                               FE827F       7       7       8   .text       
+     lcdInit                                 FE8286      4A      74       2   .text       
+     lcdInst                                 FE82D0      20      32       4   .text       
+     lcdData                                 FE82F0      20      32       2   .text       
+     lcdBusy                                 FE8310      2A      42       8   .text       
+     lcdAddr                                 FE833A      10      16       2   .text       
+     lcdString                               FE834A      28      40       6   .text       
+     lcdClear                                FE8372       B      11       4   .text       
+     Set_R_C                                 FE837D      37      55       4   .text       
+- VARIABLES:
+MODULE:                 -- switches.c.o --
+- PROCEDURES:
+     Sw_Init                                 FE83B4       4       4       2   .text       
+     Get_Switches                            FE83B8      1C      28       2   .text       
+     Wait_for_Switches_up_mask               FE83D4       A      10       2   .text       
+- VARIABLES:
+MODULE:                 -- my_delays.c.o --
+- PROCEDURES:
+     Delay_C                                 FE83DE       E      14       4   .text       
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
 - VARIABLES:
 
 *********************************************************************************************
@@ -1429,7 +1494,11 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
+<<<<<<< HEAD
   main.c.o                                    11    407     35
+=======
+  main.c.o                                     9    390     35
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
   Start12.c.o                                  0     56      0
   rtshc12.c.o (ansixbi.lib)                    0     36      0
   led_7seg.c.o                                 0    181      0
@@ -2747,7 +2816,11 @@ SECTION: ".abs_section_3ac"
 SECTION: ".abs_section_3ae"
   _XGR7 
 SECTION: ".common"
+<<<<<<< HEAD
   switches value boolean cursor counter toggle 
+=======
+  switches value boolean cursor counter 
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
@@ -3405,7 +3478,10 @@ OBJECT LIST SORTED BY ADDRESS
      boolean                                   2103       2       2       4   .common     
      cursor                                    2105       2       2      10   .common     
      counter                                   2107       2       2       3   .common     
+<<<<<<< HEAD
      toggle                                    2109       2       2       4   .common     
+=======
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
      _Startup                                  C000       F      15       0   .init       
      STRING.Input.number.1                     C031       D      13       1   .rodata1    
      STRING.too.high..2                        C03E       A      10       1   .rodata1    
@@ -3413,6 +3489,7 @@ OBJECT LIST SORTED BY ADDRESS
      _ISHRU                                    C054       B      11       2   NON_BANKED  
      _CASE_DIRECT_BYTE                         C05F       5       5       1   NON_BANKED  
      _CASE_CHECKED_BYTE                        C064      14      20       2   NON_BANKED  
+<<<<<<< HEAD
      main                                    FE8000     145     325       4   .text       
      HexToBCD                                FE8145      3A      58       2   .text       
      CursorValue                             FE817F      18      24       4   .text       
@@ -3441,6 +3518,36 @@ OBJECT LIST SORTED BY ADDRESS
      Get_Switches                            FE83C9      1C      28       2   .text       
      Wait_for_Switches_up_mask               FE83E5       A      10       2   .text       
      Delay_C                                 FE83EF       E      14       4   .text       
+=======
+     main                                    FE8000     134     308       3   .text       
+     HexToBCD                                FE8134      3A      58       2   .text       
+     CursorValue                             FE816E      18      24       4   .text       
+     Init                                    FE8186      29      41       2   .text       
+     Bot_16Out_C                             FE81AF      2C      44       2   .text       
+     Char_7Seg_C                             FE81DB      1C      28       4   .text       
+     Clear_7Seg                              FE81F7      18      24       4   .text       
+     LEDS_7Seg_Init_C                        FE820F      2C      44       2   .text       
+     Top_16Out_C                             FE823B      29      41       2   .text       
+     lcdRWUp                                 FE8264       4       4       2   .text       
+     lcdEUp                                  FE8268       4       4       8   .text       
+     lcdEDown                                FE826C       4       4       8   .text       
+     lcdRSUp                                 FE8270       4       4       2   .text       
+     lcdRSDown                               FE8274       4       4       2   .text       
+     lcdSDelay                               FE8278       7       7       6   .text       
+     lcdLDelay                               FE827F       7       7       8   .text       
+     lcdInit                                 FE8286      4A      74       2   .text       
+     lcdInst                                 FE82D0      20      32       4   .text       
+     lcdData                                 FE82F0      20      32       2   .text       
+     lcdBusy                                 FE8310      2A      42       8   .text       
+     lcdAddr                                 FE833A      10      16       2   .text       
+     lcdString                               FE834A      28      40       6   .text       
+     lcdClear                                FE8372       B      11       4   .text       
+     Set_R_C                                 FE837D      37      55       4   .text       
+     Sw_Init                                 FE83B4       4       4       2   .text       
+     Get_Switches                            FE83B8      1C      28       2   .text       
+     Wait_for_Switches_up_mask               FE83D4       A      10       2   .text       
+     Delay_C                                 FE83DE       E      14       4   .text       
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -3477,11 +3584,19 @@ OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
 main                      USES lcdInit LEDS_7Seg_Init_C Sw_Init value counter 
+<<<<<<< HEAD
                                 boolean toggle cursor Get_Switches switches 
                                 _CASE_DIRECT_BYTE CursorValue lcdClear Set_R_C 
                                 STRING.Input.number.1 lcdString main STRING.too.high..2 HexToBCD 
                                 Bot_16Out_C STRING.All.Better..3 Top_16Out_C Clear_7Seg 
                                 Delay_C Wait_for_Switches_up_mask 
+=======
+                                boolean cursor Get_Switches switches _CASE_DIRECT_BYTE 
+                                CursorValue lcdClear Set_R_C STRING.Input.number.1 
+                                lcdString STRING.too.high..2 HexToBCD Bot_16Out_C 
+                                STRING.All.Better..3 Top_16Out_C Clear_7Seg Delay_C 
+                                Wait_for_Switches_up_mask main 
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
 CursorValue               USES _CASE_CHECKED_BYTE 
 Init                      USES _startupData 
 Bot_16Out_C               USES _ISHRU Char_7Seg_C 
@@ -3618,5 +3733,9 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 6
+<<<<<<< HEAD
 Total size of all blocks to be downloaded: 1145
+=======
+Total size of all blocks to be downloaded: 1128
+>>>>>>> 0452c4b7f0a4edf4225df08be6e9a5156c81c23f
 
