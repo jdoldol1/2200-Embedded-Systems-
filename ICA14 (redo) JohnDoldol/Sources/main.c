@@ -62,14 +62,15 @@ lcdInit();
 	  sample += 1;
 	  voltage = reading * 0.005;
 	  
+	  
 	  Set_R_C(0,10);
-    if(sprintf(s,"%X",reading) > 0)  
+    if(sprintf(s,"%03X",reading) > 0)  
     {
       lcdString(s);
     }
     	
     Set_R_C(1,10);
-    if(sprintf(s,"%4.3f", voltage) > 0)
+    if(sprintf(s,"%4.3f V", voltage) > 0)
     {            
      lcdString(s);
     }	
