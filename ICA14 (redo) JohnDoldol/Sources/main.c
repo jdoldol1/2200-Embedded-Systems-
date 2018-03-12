@@ -32,7 +32,7 @@
 unsigned int reading = 0;
 char s[20];
 double voltage = 0;
-unsigned int temperature = 0;
+double temperature = 0;
 unsigned int sample = 0;
 /********************************************************************/
 //		Lookups
@@ -61,7 +61,7 @@ lcdInit();
 	  
 	  sample += 1;
 	  voltage = reading * 0.005;
-	  
+	  temperature = (voltage * 1.56) + 22;
 	  
 	  Set_R_C(0,10);
     if(sprintf(s,"%03X",reading) > 0)  
@@ -71,6 +71,12 @@ lcdInit();
     	
     Set_R_C(1,10);
     if(sprintf(s,"%4.3f V", voltage) > 0)
+    {            
+     lcdString(s);
+    }
+    
+    Set_R_C(2,10);
+    if(sprintf(s,"%2.1f C", temperature) > 0)
     {            
      lcdString(s);
     }	
