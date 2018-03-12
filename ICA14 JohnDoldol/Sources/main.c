@@ -1,21 +1,74 @@
-#include <hidef.h>      /* common defines and macros */
-#include "derivative.h"      /* derivative-specific definitions */
+/********************************************************************/
+// HC12 Program:	YourProg - MiniExplanation
+// Processor:		MC9S12XDP512
+// Xtal Speed:		16 MHz
+// Author:			John Doldol
+// Date:			DATE
+
+// Details: A more detailed explanation of the program is entered here
+/********************************************************************/
 
 
+#include <hidef.h>      		/* common defines and macros 		*/
+#include "derivative.h"      	/* derivative-specific definitions 	*/
+#include "A2D_C.h"
+#include "LCD_C.h"
+#include "my_delays.h"
+/********************************************************************/
+//		Library includes
+/********************************************************************/
 
 
+/********************************************************************/
+//		Prototypes
+/********************************************************************/
 
 
-void main(void) {
-  /* put your own code here */
+/********************************************************************/
+//		Variables
+/********************************************************************/
+
+unsigned int voltage;
+char s[20];
+/********************************************************************/
+//		Lookups
+/********************************************************************/
+
+
+void main(void)
+{
+// main entry point
+_DISABLE_COP();
+
+ATD0_Init();
+lcdInit();
+
+/********************************************************************/
+// initializations
+/********************************************************************/
+ 
+ lcdLabels("Sample: ", "Voltage: ", "Temp: ", " ");
   
-
-
-	EnableInterrupts;
-
-
-  for(;;) {
-    _FEED_COP(); /* feeds the dog */
-  } /* loop forever */
-  /* please make sure that you never leave main */
+  for (;;)     
+	{     
+	
+	  voltage = ATD0_Sample7();
+	  Set_R_C(0,10);
+    sprintf(s,"%d",voltage);
+    lcdString(s);
+	}
+	
 }
+
+
+
+/********************************************************************/
+//		Functions
+/********************************************************************/
+
+
+
+
+/********************************************************************/
+//		Interrupt Service Routines
+/********************************************************************/

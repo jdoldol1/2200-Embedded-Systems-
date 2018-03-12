@@ -1,6 +1,6 @@
 #include "derivative.h"
-#include "Delay_C.h"
-#include "A2D_Lib_C.h"
+#include "my_delays.h"
+#include "A2D_C.h"
 
 void ATD0_Init(void){
   DDR1AD0 = 0x0;
