@@ -9,6 +9,7 @@
 /********************************************************************/
 
 
+#include <stdio.h>
 #include <hidef.h>      		/* common defines and macros 		*/
 #include "derivative.h"      	/* derivative-specific definitions 	*/
 #include "A2D_C.h"
@@ -28,8 +29,11 @@
 //		Variables
 /********************************************************************/
 
-unsigned int voltage;
+unsigned int reading = 0;
 char s[20];
+double voltage = 0;
+unsigned int temperature = 0;
+unsigned int sample = 0;
 /********************************************************************/
 //		Lookups
 /********************************************************************/
@@ -50,12 +54,34 @@ lcdInit();
  lcdLabels("Sample: ", "Voltage: ", "Temp: ", " ");
   
   for (;;)     
-	{     
+	{    
 	
-	  voltage = ATD0_Sample7();
+	 	
+	  reading = ATD0_Sample7(); 
+	  
+	  sample += 1;
+	  voltage = reading * 0.005;
+	  
 	  Set_R_C(0,10);
-    sprintf(s,"%d",voltage);
-    lcdString(s);
+    if(sprintf(s,"%X",reading) > 0)  
+    {
+      lcdString(s);
+    }
+    	
+    Set_R_C(1,10);
+    if(sprintf(s,"%4.3f", voltage) > 0)
+    {            
+     lcdString(s);
+    }	
+    
+    
+    Set_R_C(3,0);
+    if(sprintf(s,"Sample # %d",sample) > 0)
+    {         
+     lcdString(s);
+    }	
+    
+    Delay_C(1000);
 	}
 	
 }
