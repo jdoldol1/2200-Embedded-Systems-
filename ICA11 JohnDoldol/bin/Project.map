@@ -27,7 +27,6 @@ FREGS.C.o (ansixs.lib)                  Model: SMALL,         Lang: ANSI-C
 rtshc12.c.o (ansixs.lib)                Model: SMALL,         Lang: ANSI-C
 VREGS.C.o (ansixs.lib)                  Model: SMALL,         Lang: ANSI-C
 SCI_Lib_C.c.o                           Model: SMALL,         Lang: ANSI-C
-my_delays.c.o                           Model: SMALL,         Lang: ANSI-C
 led_7seg.c.o                            Model: SMALL,         Lang: ANSI-C
 
 *********************************************************************************************
@@ -37,8 +36,8 @@ Entry point: 0xC029 (_Startup)
 _startupData is allocated at 0xC031 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2100     102
-  _Copy    *toCopyDownBeg 0xC80E
+  _Range   pZeroOut       0x2100     116
+  _Copy    *toCopyDownBeg 0xC7FA
 } _startupData;
 
 *********************************************************************************************
@@ -48,10 +47,10 @@ Section Name                    Size  Type     From       To       Segment
 .init                             49     R     0xC000     0xC030   ROM_C000
 .startData                        34     R     0xC031     0xC052   ROM_C000
 .rodata                            4     R     0xC053     0xC056   ROM_C000
-.text                           1257     R     0xC057     0xC53F   ROM_C000
-.copy                             69     R     0xC80E     0xC852   ROM_C000
+.text                           1237     R     0xC057     0xC52B   ROM_C000
+.copy                             83     R     0xC7FA     0xC84C   ROM_C000
 .stack                           256   R/W     0x2000     0x20FF   RAM
-.data                             64   R/W     0x2100     0x213F   RAM
+.data                             78   R/W     0x2100     0x214D   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
 .abs_section_a                     1   N/I        0xA        0xA   .absSeg2
@@ -699,14 +698,14 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_3aa                   2   N/I      0x3AA      0x3AB   .absSeg644
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
-.bss                              35   R/W     0x2140     0x2162   RAM
-.common                            3   R/W     0x2163     0x2165   RAM
-RUNTIME                          718     R     0xC540     0xC80D   ROM_C000
+.bss                              35   R/W     0x214E     0x2170   RAM
+.common                            3   R/W     0x2171     0x2173   RAM
+RUNTIME                          718     R     0xC52C     0xC7F9   ROM_C000
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         855 (dec:     2133)
-READ_WRITE (R/W):      166 (dec:      358)
+READ_ONLY (R):         84F (dec:     2127)
+READ_WRITE (R/W):      174 (dec:      372)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -1371,19 +1370,21 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                      C057      6A     106       1   .text       
-     GetValue                                  C0C1      23      35       2   .text       
+     main                                      C057      64     100       1   .text       
+     GetValue                                  C0BB      23      35       2   .text       
 - VARIABLES:
      ClearAndHome                              2100       8       8       1   .data       
-     StartYValue                               2108       7       7       2   .data       
-     promptx                                   210F      14      20       1   .data       
-     prompty                                   2123      15      21       1   .data       
-     gotit                                     2138       8       8       1   .data       
-     x                                         2140       4       4       2   .bss        
-     y                                         2144       4       4       2   .bss        
-     DestString                                2148      19      25       5   .bss        
-     SrcString                                 2161       2       2       2   .bss        
-     RxData                                    2163       1       1       3   .common     
+     Starta                                    2108       7       7       1   .data       
+     Startb                                    210F       7       7       1   .data       
+     Startc                                    2116       7       7       1   .data       
+     promptx                                   211D      14      20       1   .data       
+     prompty                                   2131      15      21       1   .data       
+     gotit                                     2146       8       8       1   .data       
+     x                                         214E       4       4       2   .bss        
+     y                                         2152       4       4       2   .bss        
+     DestString                                2156      19      25       5   .bss        
+     SrcString                                 216F       2       2       2   .bss        
+     RxData                                    2171       1       1       3   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
      Init                                      C000      29      41       1   .init       
@@ -1394,9 +1395,9 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2100       0       0       1               
 MODULE:                 -- CTYPE.C.o (ansixs.lib) --
 - PROCEDURES:
-     isdigit                                   C0E4       E      14       2   .text       
-     isspace                                   C0F2      17      23       1   .text       
-     toupper                                   C109      14      20       1   .text       
+     isdigit                                   C0DE       E      14       2   .text       
+     isspace                                   C0EC      17      23       1   .text       
+     toupper                                   C103      14      20       1   .text       
 - VARIABLES:
 MODULE:                 -- MATH.C.o (ansixs.lib) --
 - PROCEDURES:
@@ -1404,72 +1405,68 @@ MODULE:                 -- MATH.C.o (ansixs.lib) --
      infinity                                  C053       4       4       2   .rodata     
 MODULE:                 -- STDLIB.C.o (ansixs.lib) --
 - PROCEDURES:
-     _strtod                                   C11D     382     898      24   .text       
-     strtod                                    C49F      10      16       2   .text       
+     _strtod                                   C117     382     898      24   .text       
+     strtod                                    C499      10      16       2   .text       
 - VARIABLES:
 MODULE:                 -- STRING.C.o (ansixs.lib) --
 - PROCEDURES:
-     strlen                                    C4AF      13      19       1   .text       
-     strcat                                    C4C2      17      23       1   .text       
+     strlen                                    C4A9      13      19       1   .text       
+     strcat                                    C4BC      17      23       1   .text       
 - VARIABLES:
 MODULE:                 -- FADD.C.o (ansixs.lib) --
 - PROCEDURES:
-     F_ADDKL                                   C540      5E      94       1   RUNTIME     
-     _FADD                                     C59E      15      21       4   RUNTIME     
-     _FSUB                                     C5B3      13      19       1   RUNTIME     
-     _FNEG                                     C5C6       B      11       1   RUNTIME     
+     F_ADDKL                                   C52C      5E      94       1   RUNTIME     
+     _FADD                                     C58A      15      21       4   RUNTIME     
+     _FSUB                                     C59F      13      19       1   RUNTIME     
+     _FNEG                                     C5B2       B      11       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FCMP.C.o (ansixs.lib) --
 - PROCEDURES:
-     _FCMP                                     C5D1      26      38       3   RUNTIME     
+     _FCMP                                     C5BD      26      38       3   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FCONV.C.o (ansixs.lib) --
 - PROCEDURES:
-     F_FRLONGK                                 C5F7      1E      30       1   RUNTIME     
-     _FSFLOAT                                  C615      12      18       3   RUNTIME     
+     F_FRLONGK                                 C5E3      1E      30       1   RUNTIME     
+     _FSFLOAT                                  C601      12      18       3   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FMUL.C.o (ansixs.lib) --
 - PROCEDURES:
-     F_DIVKL                                   C627      84     132       1   RUNTIME     
-     F_MULKL                                   C6AB      57      87       1   RUNTIME     
-     _FMUL                                     C702      14      20       3   RUNTIME     
-     _FDIV                                     C716      1E      30       4   RUNTIME     
+     F_DIVKL                                   C613      84     132       1   RUNTIME     
+     F_MULKL                                   C697      57      87       1   RUNTIME     
+     _FMUL                                     C6EE      14      20       3   RUNTIME     
+     _FDIV                                     C702      1E      30       4   RUNTIME     
 - VARIABLES:
 MODULE:                 -- FREGS.C.o (ansixs.lib) --
 - PROCEDURES:
-     F_PULK                                    C734      15      21       3   RUNTIME     
-     F_PULL                                    C749      15      21       3   RUNTIME     
-     F_PSHK                                    C75E      13      19       4   RUNTIME     
-     F_XGKL                                    C771      21      33       2   RUNTIME     
-     F_CLRK                                    C792       B      11       2   RUNTIME     
-     F_MAXK                                    C79D       9       9       2   RUNTIME     
-     F_NORMK                                   C7A6      37      55       3   RUNTIME     
+     F_PULK                                    C720      15      21       3   RUNTIME     
+     F_PULL                                    C735      15      21       3   RUNTIME     
+     F_PSHK                                    C74A      13      19       4   RUNTIME     
+     F_XGKL                                    C75D      21      33       2   RUNTIME     
+     F_CLRK                                    C77E       B      11       2   RUNTIME     
+     F_MAXK                                    C789       9       9       2   RUNTIME     
+     F_NORMK                                   C792      37      55       3   RUNTIME     
 - VARIABLES:
 MODULE:                 -- rtshc12.c.o (ansixs.lib) --
 - PROCEDURES:
-     _NEG_P                                    C7DD       C      12       1   RUNTIME     
-     _CASE_CHECKED_BYTE                        C7E9      14      20       1   RUNTIME     
+     _NEG_P                                    C7C9       C      12       1   RUNTIME     
+     _CASE_CHECKED_BYTE                        C7D5      14      20       1   RUNTIME     
 - VARIABLES:
-     errno                                     2164       2       2       1   .common     
+     errno                                     2172       2       2       1   .common     
 MODULE:                 -- VREGS.C.o (ansixs.lib) --
 - PROCEDURES:
-     L_NEGK                                    C7FD       7       7       1   RUNTIME     
-     SL_PULK                                   C804       A      10       1   RUNTIME     
+     L_NEGK                                    C7E9       7       7       1   RUNTIME     
+     SL_PULK                                   C7F0       A      10       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- SCI_Lib_C.c.o --
 - PROCEDURES:
-     SCI0_RxByte                               C4D9       7       7       1   .text       
-     SCI0_Init19200                            C4E0       E      14       1   .text       
-     SCI0_TxByte                               C4EE       9       9       2   .text       
-     SCI0_TxString                             C4F7       F      15       7   .text       
-- VARIABLES:
-MODULE:                 -- my_delays.c.o --
-- PROCEDURES:
-     Delay_C                                   C506       E      14       2   .text       
+     SCI0_RxByte                               C4D3       7       7       1   .text       
+     SCI0_Init19200                            C4DA       E      14       1   .text       
+     SCI0_TxByte                               C4E8       9       9       2   .text       
+     SCI0_TxString                             C4F1       F      15       8   .text       
 - VARIABLES:
 MODULE:                 -- led_7seg.c.o --
 - PROCEDURES:
-     LEDS_7Seg_Init_C                          C514      2C      44       1   .text       
+     LEDS_7Seg_Init_C                          C500      2C      44       1   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1477,7 +1474,7 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                   100    141      0
+  main.c.o                                   114    135      0
   Start12.c.o                                  0     49      0
   CTYPE.C.o (ansixs.lib)                       0     57      0
   MATH.C.o (ansixs.lib)                        0      0      4
@@ -1491,18 +1488,17 @@ MODULE STATISTIC
   rtshc12.c.o (ansixs.lib)                     2     32      0
   VREGS.C.o (ansixs.lib)                       0     17      0
   SCI_Lib_C.c.o                                0     45      0
-  my_delays.c.o                                0     14      0
   led_7seg.c.o                                 0     44      0
-  other                                      256     36     69
+  other                                      256     36     83
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
   main GetValue isdigit isspace toupper _strtod strtod strlen strcat 
-  SCI0_RxByte SCI0_Init19200 SCI0_TxByte SCI0_TxString Delay_C LEDS_7Seg_Init_C 
+  SCI0_RxByte SCI0_Init19200 SCI0_TxByte SCI0_TxString LEDS_7Seg_Init_C 
 SECTION: ".data"
-  ClearAndHome StartYValue promptx prompty gotit 
+  ClearAndHome Starta Startb Startc promptx prompty gotit 
 SECTION: ".bss"
   x y DestString SrcString 
 SECTION: ".init"
@@ -3462,56 +3458,57 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
      ClearAndHome                              2100       8       8       1   .data       
-     StartYValue                               2108       7       7       2   .data       
-     promptx                                   210F      14      20       1   .data       
-     prompty                                   2123      15      21       1   .data       
-     gotit                                     2138       8       8       1   .data       
-     x                                         2140       4       4       2   .bss        
-     y                                         2144       4       4       2   .bss        
-     DestString                                2148      19      25       5   .bss        
-     SrcString                                 2161       2       2       2   .bss        
-     RxData                                    2163       1       1       3   .common     
-     errno                                     2164       2       2       1   .common     
+     Starta                                    2108       7       7       1   .data       
+     Startb                                    210F       7       7       1   .data       
+     Startc                                    2116       7       7       1   .data       
+     promptx                                   211D      14      20       1   .data       
+     prompty                                   2131      15      21       1   .data       
+     gotit                                     2146       8       8       1   .data       
+     x                                         214E       4       4       2   .bss        
+     y                                         2152       4       4       2   .bss        
+     DestString                                2156      19      25       5   .bss        
+     SrcString                                 216F       2       2       2   .bss        
+     RxData                                    2171       1       1       3   .common     
+     errno                                     2172       2       2       1   .common     
      Init                                      C000      29      41       1   .init       
      _Startup                                  C029       8       8       0   .init       
      infinity                                  C053       4       4       2   .rodata     
-     main                                      C057      6A     106       1   .text       
-     GetValue                                  C0C1      23      35       2   .text       
-     isdigit                                   C0E4       E      14       2   .text       
-     isspace                                   C0F2      17      23       1   .text       
-     toupper                                   C109      14      20       1   .text       
-     _strtod                                   C11D     382     898      24   .text       
-     strtod                                    C49F      10      16       2   .text       
-     strlen                                    C4AF      13      19       1   .text       
-     strcat                                    C4C2      17      23       1   .text       
-     SCI0_RxByte                               C4D9       7       7       1   .text       
-     SCI0_Init19200                            C4E0       E      14       1   .text       
-     SCI0_TxByte                               C4EE       9       9       2   .text       
-     SCI0_TxString                             C4F7       F      15       7   .text       
-     Delay_C                                   C506       E      14       2   .text       
-     LEDS_7Seg_Init_C                          C514      2C      44       1   .text       
-     F_ADDKL                                   C540      5E      94       1   RUNTIME     
-     _FADD                                     C59E      15      21       4   RUNTIME     
-     _FSUB                                     C5B3      13      19       1   RUNTIME     
-     _FNEG                                     C5C6       B      11       1   RUNTIME     
-     _FCMP                                     C5D1      26      38       3   RUNTIME     
-     F_FRLONGK                                 C5F7      1E      30       1   RUNTIME     
-     _FSFLOAT                                  C615      12      18       3   RUNTIME     
-     F_DIVKL                                   C627      84     132       1   RUNTIME     
-     F_MULKL                                   C6AB      57      87       1   RUNTIME     
-     _FMUL                                     C702      14      20       3   RUNTIME     
-     _FDIV                                     C716      1E      30       4   RUNTIME     
-     F_PULK                                    C734      15      21       3   RUNTIME     
-     F_PULL                                    C749      15      21       3   RUNTIME     
-     F_PSHK                                    C75E      13      19       4   RUNTIME     
-     F_XGKL                                    C771      21      33       2   RUNTIME     
-     F_CLRK                                    C792       B      11       2   RUNTIME     
-     F_MAXK                                    C79D       9       9       2   RUNTIME     
-     F_NORMK                                   C7A6      37      55       3   RUNTIME     
-     _NEG_P                                    C7DD       C      12       1   RUNTIME     
-     _CASE_CHECKED_BYTE                        C7E9      14      20       1   RUNTIME     
-     L_NEGK                                    C7FD       7       7       1   RUNTIME     
-     SL_PULK                                   C804       A      10       1   RUNTIME     
+     main                                      C057      64     100       1   .text       
+     GetValue                                  C0BB      23      35       2   .text       
+     isdigit                                   C0DE       E      14       2   .text       
+     isspace                                   C0EC      17      23       1   .text       
+     toupper                                   C103      14      20       1   .text       
+     _strtod                                   C117     382     898      24   .text       
+     strtod                                    C499      10      16       2   .text       
+     strlen                                    C4A9      13      19       1   .text       
+     strcat                                    C4BC      17      23       1   .text       
+     SCI0_RxByte                               C4D3       7       7       1   .text       
+     SCI0_Init19200                            C4DA       E      14       1   .text       
+     SCI0_TxByte                               C4E8       9       9       2   .text       
+     SCI0_TxString                             C4F1       F      15       8   .text       
+     LEDS_7Seg_Init_C                          C500      2C      44       1   .text       
+     F_ADDKL                                   C52C      5E      94       1   RUNTIME     
+     _FADD                                     C58A      15      21       4   RUNTIME     
+     _FSUB                                     C59F      13      19       1   RUNTIME     
+     _FNEG                                     C5B2       B      11       1   RUNTIME     
+     _FCMP                                     C5BD      26      38       3   RUNTIME     
+     F_FRLONGK                                 C5E3      1E      30       1   RUNTIME     
+     _FSFLOAT                                  C601      12      18       3   RUNTIME     
+     F_DIVKL                                   C613      84     132       1   RUNTIME     
+     F_MULKL                                   C697      57      87       1   RUNTIME     
+     _FMUL                                     C6EE      14      20       3   RUNTIME     
+     _FDIV                                     C702      1E      30       4   RUNTIME     
+     F_PULK                                    C720      15      21       3   RUNTIME     
+     F_PULL                                    C735      15      21       3   RUNTIME     
+     F_PSHK                                    C74A      13      19       4   RUNTIME     
+     F_XGKL                                    C75D      21      33       2   RUNTIME     
+     F_CLRK                                    C77E       B      11       2   RUNTIME     
+     F_MAXK                                    C789       9       9       2   RUNTIME     
+     F_NORMK                                   C792      37      55       3   RUNTIME     
+     _NEG_P                                    C7C9       C      12       1   RUNTIME     
+     _CASE_CHECKED_BYTE                        C7D5      14      20       1   RUNTIME     
+     L_NEGK                                    C7E9       7       7       1   RUNTIME     
+     SL_PULK                                   C7F0       A      10       1   RUNTIME     
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -3549,15 +3546,13 @@ VREGS.C.o (ansixs.lib):
   L_PSHK UL_PULK 
 SCI_Lib_C.c.o:
   SCI0_Key_hit 
-my_delays.c.o:
-  Short_Delay Long_Delay 
 led_7seg.c.o:
   Bot_8Out_C Bot_16Out_C Char_7Seg_C Char_7Seg_C_D Clear_7Seg Top_8Out_C 
   Top_16Out_C Pos_Char_C Char_Cust7Seg_C BotFront_8Out_C BotCust_8Out_C 
   ClearAll 
 NOT USED VARIABLES
 main.c.o:
-  StartXValue result 
+  result 
 CTYPE.C.o (ansixs.lib):
   _ctype 
 MATH.C.o (ansixs.lib):
@@ -3572,39 +3567,51 @@ rtshc12.c.o (ansixs.lib):
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC80E ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xC7FA ---- SIZE       4 ---
 Filling bytes inserted
- 003F2100
-------- ROM-ADDRESS: 0xC812 ---- RAM-ADDRESS: 0x2100 ---- SIZE       7 ---
+ 004D2100
+------- ROM-ADDRESS: 0xC7FE ---- RAM-ADDRESS: 0x2100 ---- SIZE       7 ---
 Name of initialized Object : ClearAndHome
  1B5B324A1B 5B48
-------- ROM-ADDRESS: 0xC819 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xC805 ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xC81A ---- RAM-ADDRESS: 0x2108 ---- SIZE       6 ---
-Name of initialized Object : StartYValue
- 1B5B353B35 48
-------- ROM-ADDRESS: 0xC820 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xC806 ---- RAM-ADDRESS: 0x2108 ---- SIZE       6 ---
+Name of initialized Object : Starta
+ 1B5B323B31 48
+------- ROM-ADDRESS: 0xC80C ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xC821 ---- RAM-ADDRESS: 0x210F ---- SIZE      19 ---
+------- ROM-ADDRESS: 0xC80D ---- RAM-ADDRESS: 0x210F ---- SIZE       6 ---
+Name of initialized Object : Startb
+ 1B5B333B31 48
+------- ROM-ADDRESS: 0xC813 ---- SIZE       1 ---
+Filling bytes inserted
+ 00
+------- ROM-ADDRESS: 0xC814 ---- RAM-ADDRESS: 0x2116 ---- SIZE       6 ---
+Name of initialized Object : Startc
+ 1B5B343B31 48
+------- ROM-ADDRESS: 0xC81A ---- SIZE       1 ---
+Filling bytes inserted
+ 00
+------- ROM-ADDRESS: 0xC81B ---- RAM-ADDRESS: 0x211D ---- SIZE      19 ---
 Name of initialized Object : promptx
  456E746572 2066697273 742076616C
  75653A20
-------- ROM-ADDRESS: 0xC834 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xC82E ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xC835 ---- RAM-ADDRESS: 0x2123 ---- SIZE      20 ---
+------- ROM-ADDRESS: 0xC82F ---- RAM-ADDRESS: 0x2131 ---- SIZE      20 ---
 Name of initialized Object : prompty
  456E746572 207365636F 6E64207661
  6C75653A20
-------- ROM-ADDRESS: 0xC849 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xC843 ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xC84A ---- RAM-ADDRESS: 0x2138 ---- SIZE       7 ---
+------- ROM-ADDRESS: 0xC844 ---- RAM-ADDRESS: 0x2146 ---- SIZE       7 ---
 Name of initialized Object : gotit
  476F742069 7421
-------- ROM-ADDRESS: 0xC851 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC84B ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3614,8 +3621,8 @@ OBJECT-DEPENDENCIES SECTION
 Init                      USES _startupData 
 _Startup                  USES __SEG_END_SSTACK Init main 
 main                      USES SCI0_Init19200 LEDS_7Seg_Init_C ClearAndHome 
-                                SCI0_TxString promptx GetValue DestString strtod x Delay_C 
-                                gotit StartYValue prompty y 
+                                SCI0_TxString promptx GetValue DestString strtod x Starta 
+                                gotit Startb prompty y Startc 
 GetValue                  USES SCI0_RxByte RxData SCI0_TxByte SrcString 
                                 DestString strcat 
 _strtod                   USES _strtod isspace isdigit _CASE_CHECKED_BYTE 
@@ -3667,85 +3674,83 @@ DEPENDENCY TREE
  |  |     +- strlen              
  |  |          
  |  +- strtod              
- |  |  | 
- |  |  +- _strtod             
- |  |     | 
- |  |     +- isspace             
- |  |     |    
- |  |     +- isdigit             
- |  |     |    
- |  |     +- _CASE_CHECKED_BYTE  
- |  |     |    
- |  |     +- _FCMP               
- |  |     |    
- |  |     +- _FSFLOAT            
- |  |     |  | 
- |  |     |  +- SL_PULK             
- |  |     |  |  | 
- |  |     |  |  +- L_NEGK              
- |  |     |  |     | 
- |  |     |  |     +- _NEG_P              
- |  |     |  |          
- |  |     |  +- F_FRLONGK           
- |  |     |  |    
- |  |     |  +- F_PSHK              
- |  |     |       
- |  |     +- _FSUB               
- |  |     |  | 
- |  |     |  +- _FADD               
- |  |     |     | 
- |  |     |     +- F_PULK              
- |  |     |     |    
- |  |     |     +- F_PULL              
- |  |     |     |    
- |  |     |     +- F_ADDKL             
- |  |     |     |  | 
- |  |     |     |  +- F_XGKL              
- |  |     |     |  |    
- |  |     |     |  +- F_NORMK             
- |  |     |     |     | 
- |  |     |     |     +- F_MAXK              
- |  |     |     |        | 
- |  |     |     |        +- F_CLRK              
- |  |     |     |             
- |  |     |     +- F_PSHK               (see above)
- |  |     |        
- |  |     +- _FADD                (see above)
- |  |     |  
- |  |     +- _FDIV               
- |  |     |  | 
- |  |     |  +- F_PULL               (see above)
- |  |     |  |  
- |  |     |  +- F_PULK               (see above)
- |  |     |  |  
- |  |     |  +- F_DIVKL             
- |  |     |  |  | 
- |  |     |  |  +- F_MAXK               (see above)
- |  |     |  |  |  
- |  |     |  |  +- F_NORMK              (see above)
- |  |     |  |     
- |  |     |  +- F_PSHK               (see above)
- |  |     |     
- |  |     +- _FMUL               
- |  |     |  | 
- |  |     |  +- F_PULK               (see above)
- |  |     |  |  
- |  |     |  +- F_PULL               (see above)
- |  |     |  |  
- |  |     |  +- F_MULKL             
- |  |     |  |  | 
- |  |     |  |  +- F_CLRK               (see above)
- |  |     |  |  |  
- |  |     |  |  +- F_NORMK              (see above)
- |  |     |  |     
- |  |     |  +- F_PSHK               (see above)
- |  |     |     
- |  |     +- toupper             
- |  |     |    
- |  |     +- _FNEG               
- |  |          
- |  +- Delay_C             
- |       
+ |     | 
+ |     +- _strtod             
+ |        | 
+ |        +- isspace             
+ |        |    
+ |        +- isdigit             
+ |        |    
+ |        +- _CASE_CHECKED_BYTE  
+ |        |    
+ |        +- _FCMP               
+ |        |    
+ |        +- _FSFLOAT            
+ |        |  | 
+ |        |  +- SL_PULK             
+ |        |  |  | 
+ |        |  |  +- L_NEGK              
+ |        |  |     | 
+ |        |  |     +- _NEG_P              
+ |        |  |          
+ |        |  +- F_FRLONGK           
+ |        |  |    
+ |        |  +- F_PSHK              
+ |        |       
+ |        +- _FSUB               
+ |        |  | 
+ |        |  +- _FADD               
+ |        |     | 
+ |        |     +- F_PULK              
+ |        |     |    
+ |        |     +- F_PULL              
+ |        |     |    
+ |        |     +- F_ADDKL             
+ |        |     |  | 
+ |        |     |  +- F_XGKL              
+ |        |     |  |    
+ |        |     |  +- F_NORMK             
+ |        |     |     | 
+ |        |     |     +- F_MAXK              
+ |        |     |        | 
+ |        |     |        +- F_CLRK              
+ |        |     |             
+ |        |     +- F_PSHK               (see above)
+ |        |        
+ |        +- _FADD                (see above)
+ |        |  
+ |        +- _FDIV               
+ |        |  | 
+ |        |  +- F_PULL               (see above)
+ |        |  |  
+ |        |  +- F_PULK               (see above)
+ |        |  |  
+ |        |  +- F_DIVKL             
+ |        |  |  | 
+ |        |  |  +- F_MAXK               (see above)
+ |        |  |  |  
+ |        |  |  +- F_NORMK              (see above)
+ |        |  |     
+ |        |  +- F_PSHK               (see above)
+ |        |     
+ |        +- _FMUL               
+ |        |  | 
+ |        |  +- F_PULK               (see above)
+ |        |  |  
+ |        |  +- F_PULL               (see above)
+ |        |  |  
+ |        |  +- F_MULKL             
+ |        |  |  | 
+ |        |  |  +- F_CLRK               (see above)
+ |        |  |  |  
+ |        |  |  +- F_NORMK              (see above)
+ |        |  |     
+ |        |  +- F_PSHK               (see above)
+ |        |     
+ |        +- toupper             
+ |        |    
+ |        +- _FNEG               
+ |             
  +- _Startup            
     | 
     +- Init                
@@ -3759,5 +3764,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 6
-Total size of all blocks to be downloaded: 2133
+Total size of all blocks to be downloaded: 2127
 

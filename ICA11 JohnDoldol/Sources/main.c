@@ -38,10 +38,11 @@
  char RxData;
  
  char ClearAndHome[] = "\x1B[2J\x1B[H";
- char StartXValue[] = "\x1b[2;10H";
- char StartYValue[] = "\x1b[5;5H";
- char promptx[] = "Enter first value: ";
- char prompty[] = "Enter second value: ";
+ char Starta[] = "\x1b[2;1H";
+ char Startb[] = "\x1b[3;1H";
+ char Startc[] = "\x1b[4;1H";
+ char promptx[] = "Enter first decimal value: ";
+ char prompty[] = "Enter second decimal value: ";
  char gotit[] = "Got it!";
  char result[]="";
 
@@ -62,20 +63,18 @@ void main()
   { 
   
     GetValue();    
-    x = atof(DestString);   
-       
-    Delay_C(5000);   
+    x = atof(DestString);  
     
+    SCI0_TxString(Starta) ;
     SCI0_TxString(gotit);
     SCI0_TxString(DestString);
-    SCI0_TxString(StartXValue);
+    SCI0_TxString(Startb);
     SCI0_TxString(prompty);
     
     GetValue();
     y = atof(DestString);
-    Delay_C(5000);
     
-    SCI0_TxString(StartYValue);
+    SCI0_TxString(Startc);
     SCI0_TxString(DestString);
       
   } /* loop forever */
